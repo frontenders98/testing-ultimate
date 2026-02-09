@@ -201,6 +201,29 @@
         color: #475569; 
         line-height: 1.6;
     }
+    /* Model Answer Formatting */
+.model-answer-box {
+    white-space: pre-wrap;  /* This forces paragraph breaks to show */
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+    background: #222;
+    color: #eee;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+/* Word Counter Style */
+.word-count-display {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
+}
 
 </style>
 </head>
@@ -479,47 +502,71 @@
 
     function backToDash() { setView('papers'); }
     function toggleInsert() { document.getElementById('insert-panel').classList.toggle('show'); }
+    function countWords(textarea, displayId) {
+    const text = textarea.value.trim();
+    const count = text ? text.split(/\s+/).length : 0;
+    document.getElementById(displayId).innerText = `${count} Words`;
+    
+    // Optional: Turn red if over limit (visual cue)
+    // const limit = parseInt(textarea.getAttribute('data-limit') || 1000);
+    // document.getElementById(displayId).style.color = count > limit ? 'red' : '#666';
+}
 
-    function openPaper(pid) {
-        const data = paperData[pid];
-        const u = getUser();
-        const attempts = getAttempts(u)[pid] || {};
+   function openPaper(pid) {
+    const data = paperData[pid];
+    const u = getUser();
+    const attempts = getAttempts(u)[pid] || {};
+    
+    document.getElementById('insert-pdf').src = data.pdf;
+    
+    let qHtml = `<h2 style="margin-bottom:20px; color:var(--lime-dark);">${data.title}</h2>`;
+    
+    data.questions.forEach(q => {
+        const att = attempts[q.n] || {};
+        const done = att.score !== undefined;
         
-        document.getElementById('insert-pdf').src = data.pdf;
-        
-        let qHtml = `<h2 style="margin-bottom:20px; color:var(--lime-dark);">${data.title}</h2>`;
-        data.questions.forEach(q => {
-            const att = attempts[q.n] || {};
-            const done = att.score !== undefined;
-            
-            let aoHtml = '';
-            if(done) {
-                aoHtml = `<div style="display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;">
-                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO1: ${att.ao1 || '-'}</span>
-                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO2: ${att.ao2 || '-'}</span>
-                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO3: ${att.ao3 || '-'}</span>
-                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO4: ${att.ao4 || '-'}</span>
-                </div>`;
-            }
-
-            qHtml += `<div class="question-card">
-                <div class="q-header"><strong>Q${q.n}</strong><span class="q-badge">${q.m} Marks</span></div>
-                <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
-                ${q.l ? `<p class="word-limit">Limit: ${q.l} words</p>` : ''}
-                <textarea id="ans_${pid}_${q.n}">${att.answer || ''}</textarea>
-                <button class="submit-btn ${done ? 'completed' : ''}" onclick="submitAnswer('${pid}', '${q.n}')">${done ? '✓ Re-Evaluate' : 'Submit'}</button>
-                ${done ? `<div class="feedback-box">
-                            <h3>Score: ${att.score}/${q.m}</h3>
-                            ${aoHtml}
-                            <p><strong>Strengths:</strong> ${att.strengths}</p>
-                            <p><strong>Improvements:</strong> ${att.weaknesses}</p>
-                            <div style="background:#222; color:#eee; padding:15px; border-radius:10px; margin-top:10px;"><strong>Model Answer:</strong><br>${att.modelAnswer}</div>
-                          </div>` : ''}
+        let aoHtml = '';
+        if(done) {
+            aoHtml = `<div style="display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;">
+                <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO1: ${att.ao1 || '-'}</span>
+                <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO2: ${att.ao2 || '-'}</span>
+                <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO3: ${att.ao3 || '-'}</span>
+                <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO4: ${att.ao4 || '-'}</span>
             </div>`;
-        });
-        document.getElementById('questions-container').innerHTML = qHtml;
-        setView('workspace');
-    }
+        }
+
+        // Calculate initial word count for saved answers
+        const initCount = att.answer ? att.answer.trim().split(/\s+/).length : 0;
+        const limitText = q.l ? ` / Limit: ${q.l}` : '';
+
+        qHtml += `<div class="question-card">
+            <div class="q-header"><strong>Q${q.n}</strong><span class="q-badge">${q.m} Marks</span></div>
+            <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
+            
+            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                ${q.l ? `<span style="font-size:0.85rem; color:#888;">Target: ${q.l} words</span>` : '<span></span>'}
+                <span id="wc_${pid}_${q.n}" class="word-count-display" style="color:var(--lime-dark); margin:0;">${initCount} Words</span>
+            </div>
+
+            <textarea id="ans_${pid}_${q.n}" 
+                      oninput="countWords(this, 'wc_${pid}_${q.n}')" 
+                      placeholder="Type your answer here...">${att.answer || ''}</textarea>
+            
+            <button class="submit-btn ${done ? 'completed' : ''}" onclick="submitAnswer('${pid}', '${q.n}')">${done ? '✓ Re-Evaluate' : 'Submit'}</button>
+            
+            ${done ? `<div class="feedback-box">
+                        <h3>Score: ${att.score}/${q.m}</h3>
+                        ${aoHtml}
+                        <p><strong>Strengths:</strong> ${att.strengths}</p>
+                        <p><strong>Improvements:</strong> ${att.weaknesses}</p>
+                        <div class="model-answer-box"><strong>Model Answer:</strong><br><br>${att.modelAnswer}</div>
+                      </div>` : ''}
+        </div>`;
+    });
+    
+    document.getElementById('questions-container').innerHTML = qHtml;
+    setView('workspace');
+}
 
   async function submitAnswer(pid, qn) {
     const el = document.getElementById(`ans_${pid}_${qn}`);
