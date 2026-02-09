@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> A-Level Business | The One</title>
+<title>A-Level Business | The One</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-    /* GLOBAL FONT (Your Original) */
+    /* GLOBAL FONT */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
-    /* NEW FONTS (Only for Formula Sheet) */
+    /* NEW FONTS (For Formula Sheet) */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap');
 
     :root {
@@ -23,7 +23,6 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    /* KEEP GLOBAL FONT AS PLUS JAKARTA SANS */
     body { 
         font-family: 'Plus Jakarta Sans', sans-serif; 
         background: linear-gradient(135deg, #f6fff6 0%, #e8f5e9 100%);
@@ -33,12 +32,11 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-    /* === FORMULA SHEET SPECIFIC STYLES (Scoped) === */
-    /* This ensures only the Formula section gets the new look */
+    /* === FORMULA SHEET SPECIFIC STYLES === */
     #view-formulae .formula-section { margin-bottom: 40px; }
     
     #view-formulae .chapter-title {
-        font-family: 'Playfair Display', serif; /* Elegant Header Font */
+        font-family: 'Playfair Display', serif;
         font-size: 1.6rem;
         color: #1a1a1a;
         margin-bottom: 20px;
@@ -69,14 +67,13 @@
         border-color: var(--lime-primary);
     }
     
-    /* Green accent line on the left */
     #view-formulae .formula-card::before {
         content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
         background: var(--lime-primary);
     }
 
     #view-formulae .f-title { 
-        font-family: 'Inter', sans-serif; /* Clean Label Font */
+        font-family: 'Inter', sans-serif;
         font-size: 0.85rem; 
         font-weight: 600; 
         color: #888; 
@@ -86,14 +83,14 @@
     }
     
     #view-formulae .f-body { 
-        font-family: 'Inter', sans-serif; /* Clean Number Font */
+        font-family: 'Inter', sans-serif;
         font-size: 1.15rem; 
         font-weight: 500; 
         color: #2c3e50; 
         line-height: 1.4;
     }
 
-    /* === REST OF THE APP STYLES (Preserved) === */
+    /* === APP STYLES === */
     .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); z-index: 1000; }
     .login-card { background: white; padding: 50px; width: 400px; border-radius: 24px; box-shadow: var(--shadow); text-align: center; border: 1px solid var(--lime-light); }
     .login-card h1 { color: var(--lime-dark); font-weight: 800; margin-bottom: 30px; }
@@ -146,676 +143,365 @@
     .hidden { display: none !important; }
     .toggle-insert { display: none; margin-bottom: 15px; background: #eee; padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; }
     @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; height: auto; } .insert-panel { display: none; height: 400px; } .insert-panel.show { display: block; } .toggle-insert { display: block; } }
-
 </style>
 </head>
 <body>
-    <div class="app-header">
-    <div class="header-left">
-        <img src="logo.png" alt="Logo" class="app-logo"> 
-        <div>
-            <h2 style="color:var(--lime-dark); margin:0;">Business Practice</h2>
-            <div id="welcome-msg" class="welcome-text"></div>
-        </div>
-    </div>
-    ...
-</div>
 
 <div id="login-layer" class="login-screen">
-<div class="login-card">
-<h1>EXAM PORTAL</h1>
-<input type="text" id="u-in" class="login-input" placeholder="name.surname.dob">
-<input type="password" id="p-in" class="login-input" placeholder="Passcode">
-<button class="submit-btn" onclick="tryLogin()">Sign in</button>
-<button class="sys-reset" onclick="resetAll()">Reset System Data</button>
-</div>
+    <div class="login-card">
+        <h1>EXAM PORTAL</h1>
+        <input type="text" id="u-in" class="login-input" placeholder="name.surname.dob">
+        <input type="password" id="p-in" class="login-input" placeholder="Passcode">
+        <button class="submit-btn" onclick="tryLogin()">Sign in</button>
+        <button class="sys-reset" onclick="resetAll()">Reset System Data</button>
+    </div>
 </div>
 
 <div id="app-layer" class="hidden">
-<div class="container">
-<div class="app-header">
-<div>
-    <h2 style="color:var(--lime-dark)">Business Practice</h2>
-    <div id="welcome-msg" class="welcome-text"></div>
-</div>
-<div class="nav">
-<button class="nav-btn active" onclick="setView('papers')">Papers</button>
-<button class="nav-btn" onclick="setView('formulae')">Formulae</button>
-<button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
-<button class="nav-btn" onclick="doLogout()">Logout</button>
-</div>
-</div>
-
-<div id="view-papers">
-    <div class="series-header">
-        <div class="year-big">2024</div>
-        <div class="series-name">Feb / March Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2024_fm_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Clean Delivery (CD)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-    </div>
-    <div class="series-header">
-        <div class="year-big">2024</div>
-        <div class="series-name">May / June Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2024_mj_31')">
-            <span class="paper-tag">9609/31</span>
-            <h3>Gordy Building Supplies (GBS)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2024_mj_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Soymai Farms (SF)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2024_mj_33')">
-            <span class="paper-tag">9609/33</span>
-            <h3>Sunil's Clothing Company (SCC)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-    </div>
-    <div class="series-header">
-        <div class="year-big">2024</div>
-        <div class="series-name">Oct / Nov Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2024_on_31')">
-            <span class="paper-tag">9609/31</span>
-            <h3>TopoChoc Enterprises (TC)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2024_on_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Habesha Clean Cooking (HCC)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2024_on_33')">
-            <span class="paper-tag">9609/33</span>
-            <h3>Australasia Fitness Factory (AFF)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
+    <div class="container">
         
-    </div>
-         
-    </div>
-    <div class="series-header">
-        <div class="year-big">2025</div>
-        <div class="series-name">Feb / March Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2025_fm_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Iyipada (IPA)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-    </div>
-    
-   
-    </div>
-    <div class="series-header">
-        <div class="year-big">2025</div>
-        <div class="series-name">May / June Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2025_mj_31')">
-            <span class="paper-tag">9609/31</span>
-            <h3>Wisdom Shoes (WS)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2025_mj_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Pura AI Robots (PAIR)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2025_mj_33')">
-            <span class="paper-tag">9609/33</span>
-            <h3>We Care Products (WCP)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-    </div>
-     <div class="series-header">
-        <div class="year-big">2025</div>
-        <div class="series-name">Oct / Nov Series</div>
-    </div>
-    <div class="papers-grid">
-        <div class="paper-card" onclick="openPaper('2025_on_31')">
-            <span class="paper-tag">9609/31</span>
-            <h3>Pedro's Perfect Pies (PPP)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2025_on_32')">
-            <span class="paper-tag">9609/32</span>
-            <h3>Komate Tropical Juice (KTJ)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
-        </div>
-        <div class="paper-card" onclick="openPaper('2025_on_33')">
-            <span class="paper-tag">9609/33</span>
-            <h3>Lithium Battery Metals (LBM)</h3>
-            <p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p>
+        <div class="app-header">
+            <div class="header-left">
+                <img src="logo.png" alt="Logo" class="app-logo" onerror="this.style.display='none'"> 
+                <div>
+                    <h2 style="color:var(--lime-dark); margin:0;">Business Practice</h2>
+                    <div id="welcome-msg" class="welcome-text"></div>
+                </div>
+            </div>
+            <div class="nav">
+                <button class="nav-btn active" onclick="setView('papers')">Papers</button>
+                <button class="nav-btn" onclick="setView('formulae')">Formulae</button>
+                <button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
+                <button class="nav-btn" onclick="doLogout()">Logout</button>
+            </div>
         </div>
 
-    
-    </div>
+        <div id="view-papers">
+            
+            <div class="series-header"><div class="year-big">2025</div><div class="series-name">Oct / Nov Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2025_on_31')"><span class="paper-tag">9609/31</span><h3>Pedro's Perfect Pies (PPP)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2025_on_32')"><span class="paper-tag">9609/32</span><h3>Komate Tropical Juice (KTJ)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2025_on_33')"><span class="paper-tag">9609/33</span><h3>Lithium Battery Metals (LBM)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
 
-</div>
+            <div class="series-header"><div class="year-big">2025</div><div class="series-name">May / June Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2025_mj_31')"><span class="paper-tag">9609/31</span><h3>Wisdom Shoes (WS)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2025_mj_32')"><span class="paper-tag">9609/32</span><h3>Pura AI Robots (PAIR)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2025_mj_33')"><span class="paper-tag">9609/33</span><h3>We Care Products (WCP)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
 
-<div id="view-formulae" class="hidden">
-    <h2 class="section-title">A-Level Business Formulae</h2>
-    <div class="formula-grid">
-        
-        <div class="formula-card"><div class="f-title">Absenteeism (%)</div><div class="f-body">(Days Absent / Total Workdays) × 100</div></div>
-        
-        <div class="formula-card"><div class="f-title">ARR (Accounting Rate of Return)</div><div class="f-body">(Average Annual Profit / Average Investment) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Average Investment</div><div class="f-body">(Initial Capital Cost + Residual Value) / 2</div></div>
-        <div class="formula-card"><div class="f-title">Payback (Additional Months)</div><div class="f-body">(Additional Cash Needed / Annual Cash Flow) × 12</div></div>
-        
-        <div class="formula-card"><div class="f-title">Current Ratio</div><div class="f-body">Current Assets / Current Liabilities</div></div>
-        <div class="formula-card"><div class="f-title">Acid Test Ratio</div><div class="f-body">Liquid Assets / Current Liabilities</div></div>
-        <div class="formula-card"><div class="f-title">Working Capital</div><div class="f-body">Current Assets - Current Liabilities</div></div>
-        <div class="formula-card"><div class="f-title">Liquid Assets</div><div class="f-body">Current Assets - Inventories</div></div>
+            <div class="series-header"><div class="year-big">2025</div><div class="series-name">Feb / March Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2025_fm_32')"><span class="paper-tag">9609/32</span><h3>Iyipada (IPA)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
 
-        <div class="formula-card"><div class="f-title">ROCE</div><div class="f-body">(Operating Profit / Capital Employed) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Gross Profit Margin</div><div class="f-body">(Gross Profit / Revenue) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Operating Profit Margin</div><div class="f-body">(Operating Profit / Revenue) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Gross Profit</div><div class="f-body">Revenue - Cost of Sales</div></div>
-        <div class="formula-card"><div class="f-title">Cost of Sales</div><div class="f-body">(Opening Inventory + Purchases) - Closing Inventory</div></div>
-        
-        <div class="formula-card"><div class="f-title">Dividend Per Share</div><div class="f-body">Total Annual Dividends / Total Issued Shares</div></div>
-        <div class="formula-card"><div class="f-title">Dividend Yield Ratio</div><div class="f-body">(Dividend Per Share / Market Share Price) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Dividend Cover Ratio</div><div class="f-body">Profit for Year / Annual Dividends</div></div>
-        <div class="formula-card"><div class="f-title">Earnings Per Share (EPS)</div><div class="f-body">Profit for Year / Number of Shares Issued</div></div>
-        <div class="formula-card"><div class="f-title">Price/Earnings (P/E) Ratio</div><div class="f-body">Market Share Price / Earnings Per Share</div></div>
-        <div class="formula-card"><div class="f-title">Reserves</div><div class="f-body">Shareholders' Equity - Equity Capital</div></div>
+            <div class="series-header"><div class="year-big">2024</div><div class="series-name">Oct / Nov Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2024_on_31')"><span class="paper-tag">9609/31</span><h3>TopoChoc Enterprises (TC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2024_on_32')"><span class="paper-tag">9609/32</span><h3>Habesha Clean Cooking (HCC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2024_on_33')"><span class="paper-tag">9609/33</span><h3>Australasia Fitness Factory (AFF)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
 
-        <div class="formula-card"><div class="f-title">Market Share</div><div class="f-body">(Sales of Business / Total Market Sales) × 100</div></div>
-        <div class="formula-card"><div class="f-title">Price Elasticity (PED)</div><div class="f-body">% Change in Qty Demanded / % Change in Price</div></div>
-        <div class="formula-card"><div class="f-title">Income Elasticity (YED)</div><div class="f-body">% Change in Demand / % Change in Income</div></div>
-        <div class="formula-card"><div class="f-title">Promotional Elasticity</div><div class="f-body">% Change in Demand / % Change in Spending</div></div>
-        <div class="formula-card"><div class="f-title">Total Revenue</div><div class="f-body">Selling Price × Quantity Sold</div></div>
+            <div class="series-header"><div class="year-big">2024</div><div class="series-name">May / June Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2024_mj_31')"><span class="paper-tag">9609/31</span><h3>Gordy Building Supplies (GBS)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2024_mj_32')"><span class="paper-tag">9609/32</span><h3>Soymai Farms (SF)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+                <div class="paper-card" onclick="openPaper('2024_mj_33')"><span class="paper-tag">9609/33</span><h3>Sunil's Clothing Company (SCC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
 
-        <div class="formula-card"><div class="f-title">Inventory Turnover Rate</div><div class="f-body">Cost of Sales / Average Inventory</div></div>
-        <div class="formula-card"><div class="f-title">Average Inventory</div><div class="f-body">(Start Inventory + End Inventory) / 2</div></div>
-        <div class="formula-card"><div class="f-title">Trade Payable Turnover</div><div class="f-body">(Trade Payables / Credit Purchases) × 365</div></div>
-        <div class="formula-card"><div class="f-title">Annual Depreciation</div><div class="f-body">(Original Cost - Residual Value) / Useful Life</div></div>
-        <div class="formula-card"><div class="f-title">Net Book Value</div><div class="f-body">Original Cost - Accumulated Depreciation</div></div>
-        <div class="formula-card"><div class="f-title">Net Realisable Value</div><div class="f-body">Existing Inventory Value - Cost of Selling</div></div>
-
-        <div class="formula-card"><div class="f-title">Total Float</div><div class="f-body">LFT - Duration - EST</div></div>
-        <div class="formula-card"><div class="f-title">Free Float</div><div class="f-body">EST (Next Activity) - Duration - EST (This Activity)</div></div>
-        <div class="formula-card"><div class="f-title">Gearing Ratio</div><div class="f-body">(Non-Current Liabilities / Capital Employed) × 100</div></div>
-
-    </div>
-</div>
-    </div>
-</div>
-
-<div id="view-scorecard" class="hidden">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
-        <div>
-            <h2 style="font-size:2rem; color:var(--text-dark);">Performance Analytics</h2>
-            <p style="color:#888;">Track your progress across all exam series</p>
+            <div class="series-header"><div class="year-big">2024</div><div class="series-name">Feb / March Series</div></div>
+            <div class="papers-grid">
+                <div class="paper-card" onclick="openPaper('2024_fm_32')"><span class="paper-tag">9609/32</span><h3>Clean Delivery (CD)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+            </div>
         </div>
-        <button class="reset-icon-btn" onclick="resetAll()">⚠ WIPE SYSTEM DATA</button>
+
+        <div id="view-formulae" class="hidden">
+            
+            <div class="formula-section">
+                <h3 class="chapter-title">Finance: Ratio Analysis</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">Current Ratio</div><div class="f-body">Current Assets / Current Liabilities</div></div>
+                    <div class="formula-card"><div class="f-title">Acid Test Ratio</div><div class="f-body">Liquid Assets / Current Liabilities</div></div>
+                    <div class="formula-card"><div class="f-title">ROCE</div><div class="f-body">(Operating Profit / Capital Employed) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Gearing Ratio</div><div class="f-body">(Non-Current Liabilities / Capital Employed) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Gross Profit Margin</div><div class="f-body">(Gross Profit / Revenue) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Operating Profit Margin</div><div class="f-body">(Operating Profit / Revenue) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Inventory Turnover</div><div class="f-body">Cost of Sales / Average Inventory</div></div>
+                    <div class="formula-card"><div class="f-title">Trade Payables Turnover</div><div class="f-body">(Trade Payables / Credit Purchases) × 365</div></div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="chapter-title">Finance: Shareholder Ratios</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">Earnings Per Share (EPS)</div><div class="f-body">Profit for Year / Number of Issued Shares</div></div>
+                    <div class="formula-card"><div class="f-title">Price / Earnings (P/E) Ratio</div><div class="f-body">Market Price / Earnings Per Share</div></div>
+                    <div class="formula-card"><div class="f-title">Dividend Per Share</div><div class="f-body">Total Annual Dividends / Total Issued Shares</div></div>
+                    <div class="formula-card"><div class="f-title">Dividend Yield</div><div class="f-body">(Dividend Per Share / Market Price) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Dividend Cover</div><div class="f-body">Profit for Year / Annual Dividends</div></div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="chapter-title">Investment Appraisal</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">ARR (Accounting Rate of Return)</div><div class="f-body">(Average Annual Profit / Average Investment) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Payback Period</div><div class="f-body">Amount Invested / Annual Net Cash Flow</div></div>
+                    <div class="formula-card"><div class="f-title">Payback (Monthly Adj.)</div><div class="f-body">(Additional Cash Needed / Annual Cash Flow) × 12</div></div>
+                    <div class="formula-card"><div class="f-title">Average Investment</div><div class="f-body">(Initial Cost + Residual Value) / 2</div></div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="chapter-title">Marketing</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">Market Share</div><div class="f-body">(Sales of Business / Total Market Sales) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Price Elasticity (PED)</div><div class="f-body">% Change in Demand / % Change in Price</div></div>
+                    <div class="formula-card"><div class="f-title">Income Elasticity (YED)</div><div class="f-body">% Change in Demand / % Change in Income</div></div>
+                    <div class="formula-card"><div class="f-title">Promotional Elasticity</div><div class="f-body">% Change in Demand / % Change in Spending</div></div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="chapter-title">Operations & Project Management</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">Capacity Utilisation</div><div class="f-body">(Current Output / Maximum Output) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Total Float</div><div class="f-body">LFT - Duration - EST</div></div>
+                    <div class="formula-card"><div class="f-title">Free Float</div><div class="f-body">EST (Next Activity) - Duration - EST (This Activity)</div></div>
+                </div>
+            </div>
+
+            <div class="formula-section">
+                <h3 class="chapter-title">Human Resources</h3>
+                <div class="formula-grid">
+                    <div class="formula-card"><div class="f-title">Absenteeism Rate</div><div class="f-body">(Total Days Absent / Total Work Days) × 100</div></div>
+                    <div class="formula-card"><div class="f-title">Labour Turnover</div><div class="f-body">(Number of Staff Leaving / Average Staff) × 100</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-scorecard" class="hidden">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
+                <div>
+                    <h2 style="font-size:2rem; color:var(--text-dark);">Performance Analytics</h2>
+                    <p style="color:#888;">Track your progress across all exam series</p>
+                </div>
+                <button class="reset-icon-btn" onclick="resetAll()">⚠ WIPE DATA</button>
+            </div>
+            <div id="stats-overview" class="stats-container"></div>
+            <div id="score-table-container"></div>
+        </div>
+
+        <div id="view-workspace" class="hidden">
+            <button class="nav-btn" onclick="backToDash()" style="margin-bottom:10px;">← Back to Papers</button>
+            <div class="toggle-insert" onclick="toggleInsert()">📖 Toggle PDF Case Study</div>
+            <div class="workspace">
+                <div class="insert-panel" id="insert-panel">
+                    <iframe id="insert-pdf" class="insert-pdf-frame" src=""></iframe>
+                </div>
+                <div class="questions-panel" id="questions-container"></div>
+            </div>
+        </div>
+
     </div>
-
-    <div id="stats-overview" class="stats-container"></div>
-
-    <div id="score-table-container"></div>
-</div>
-
-<div id="view-workspace" class="hidden">
-<button class="nav-btn" onclick="backToDash()" style="margin-bottom:10px;">← Back to Papers</button>
-<div class="toggle-insert" onclick="toggleInsert()">📖 Toggle PDF Case Study</div>
-<div class="workspace">
-<div class="insert-panel" id="insert-panel">
-    <iframe id="insert-pdf" class="insert-pdf-frame" src=""></iframe>
-</div>
-<div class="questions-panel" id="questions-container"></div>
-</div>
-</div>
-
-</div>
 </div>
 
 <script>
-/* FULL QUESTION DATA RESTORED */
-const paperData = {
-'2025_on_31': {
-title: "Pedro's Perfect Pies (PPP)",
-pdf: "9609_w25_in_31.pdf", 
-questions: [
-{ n: '1', m: 8, t: 'Analyse two likely impacts on PPP of the changing external influences.', l: '150-225' },
-{ n: '2', m: 8, t: 'Analyse two benefits to PPP of using quality assurance.', l: '150-225' },
-{ n: '3(a)', m: 2, t: 'Using Table 1.3, calculate the payback period for PPP\'s new machine.' },
-{ n: '3(b)', m: 2, t: 'Using Table 1.3, calculate the ARR for PPP\'s new machine.' },
-{ n: '3(c)', m: 12, t: 'Evaluate whether PPP should invest in the new machine.', l: '250-350' },
-{ n: '4(a)', m: 4, t: 'Calculate the monthly revenue from the sales of the classic pie after the price increase.' },
-{ n: '4(b)', m: 12, t: 'Evaluate the usefulness to PPP of elasticity measures.', l: '250-350' },
-{ n: '5', m: 12, t: 'Evaluate the importance of emotional intelligence to Pedro\'s leadership.', l: '250-350' }
-]
-},
-'2025_on_32': {
-title: "Komate Tropical Juice (KTJ)",
-pdf: "9609_w25_in_32.pdf",
-questions: [
-{ n: '1', m: 8, t: 'Analyse one advantage and one disadvantage to KTJ of delegation.', l: '150-225' },
-{ n: '2', m: 8, t: 'Analyse two impacts on KTJ of its commitment to CSR.', l: '150-225' },
-{ n: '3(a)', m: 2, t: 'Calculate the payback period of the country C location.' },
-{ n: '3(b)', m: 2, t: 'Calculate the ARR of the country D location.' },
-{ n: '3(c)', m: 12, t: 'Evaluate which location KTJ should choose for its new factory.', l: '250-350' },
-{ n: '4(a)', m: 4, t: 'Calculate the four period centred moving average for Quarter 1 2025.' },
-{ n: '4(b)', m: 12, t: 'Evaluate the usefulness of time series analysis to KTJ.', l: '250-350' },
-{ n: '5', m: 12, t: 'Evaluate the likely impact on KTJ of fluctuations in the exchange rate.', l: '250-350' }
-]
-},
-'2025_on_33': {
-title: "Lithium Battery Metals (LBM)",
-pdf: "9609_w25_in_33.pdf",
-questions: [
-{ n: '1', m: 8, t: 'Analyse two advantages to the government of country G from nationalisation.', l: '150-225' },
-{ n: '2', m: 8, t: 'Analyse one benefit and one limitation of sales forecasting to LBM.', l: '150-225' },
-{ n: '3(a)', m: 2, t: 'Using Table 1.1, calculate the payback period.' },
-{ n: '3(b)', m: 2, t: 'Using Table 1.1, calculate the NPV over six years discounted at 8%.' },
-{ n: '3(c)', m: 12, t: 'Evaluate LBM\'s decision to go ahead with the hot water mine.', l: '250-350' },
-{ n: '4(a)', m: 4, t: 'Calculate total float for activity C and minimum project duration.' },
-{ n: '4(b)', m: 12, t: 'Evaluate the importance of CPA to the success of the hard rock mine.', l: '250-350' },
-{ n: '5', m: 12, t: 'Evaluate LBM\'s decision to use two different approaches to HRM.', l: '250-350' }
-]
-},
-'2025_fm_32': {
-title: "Iyipada (IPA)",
-pdf: "9609_m25_in_32.pdf", 
-questions: [
-{ n: '1', m: 8, t: 'Analyse one advantage and one disadvantage to IPA of changing employment contracts.', l: '150-225' },
-{ n: '2', m: 8, t: 'Analyse two methods to improve IPA\'s liquidity.', l: '150-225' },
-{ n: '3(a)', m: 2, t: 'Calculate, for 2024, IPA\'s market share.' },
-{ n: '3(b)', m: 2, t: 'Calculate, for 2025, the expected percentage market growth.' },
-{ n: '3(c)', m: 12, t: 'Evaluate the Marketing Director\'s proposed changes to IPA\'s marketing mix.', l: '250-350' },
-{ n: '4(a)', m: 2, t: 'Complete nodes 5 and 6 on the network diagram.' },
-{ n: '4(b)', m: 2, t: 'Calculate the total float for Activity F.' },
-{ n: '4(c)', m: 12, t: 'Evaluate the benefit to IPA of Critical Path Analysis (CPA).', l: '250-350' },
-{ n: '5', m: 12, t: 'Evaluate the most likely impact on IPA of the fiscal and monetary policy changes.', l: '250-350' }
-]
-},
-// ... previous papers ...
+    const paperData = {
+        /* 2025 SERIES */
+        '2025_on_31': { title: "Pedro's Perfect Pies (PPP)", pdf: "9609_w25_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two likely impacts on PPP of the changing external influences.', l:'150-225'}, { n:'2', m:8, t:'Analyse two benefits to PPP of using quality assurance.', l:'150-225'}, { n:'3(a)', m:2, t:'Using Table 1.3, calculate the payback period for PPP\'s new machine.'}, { n:'3(b)', m:2, t:'Using Table 1.3, calculate the ARR for PPP\'s new machine.'}, { n:'3(c)', m:12, t:'Evaluate whether PPP should invest in the new machine.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the monthly revenue from the sales of the classic pie after the price increase.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness to PPP of elasticity measures.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of emotional intelligence to Pedro\'s leadership.', l:'250-350'} ] },
+        '2025_on_32': { title: "Komate Tropical Juice (KTJ)", pdf: "9609_w25_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse one advantage and one disadvantage to KTJ of delegation.', l:'150-225'}, { n:'2', m:8, t:'Analyse two impacts on KTJ of its commitment to CSR.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the payback period of the country C location.'}, { n:'3(b)', m:2, t:'Calculate the ARR of the country D location.'}, { n:'3(c)', m:12, t:'Evaluate which location KTJ should choose for its new factory.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the four period centred moving average for Quarter 1 2025.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of time series analysis to KTJ.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the likely impact on KTJ of fluctuations in the exchange rate.', l:'250-350'} ] },
+        '2025_on_33': { title: "Lithium Battery Metals (LBM)", pdf: "9609_w25_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to the government of country G from nationalisation.', l:'150-225'}, { n:'2', m:8, t:'Analyse one benefit and one limitation of sales forecasting to LBM.', l:'150-225'}, { n:'3(a)', m:2, t:'Using Table 1.1, calculate the payback period.'}, { n:'3(b)', m:2, t:'Using Table 1.1, calculate the NPV over six years discounted at 8%.'}, { n:'3(c)', m:12, t:'Evaluate LBM\'s decision to go ahead with the hot water mine.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate total float for activity C and minimum project duration.'}, { n:'4(b)', m:12, t:'Evaluate the importance of CPA to the success of the hard rock mine.', l:'250-350'}, { n:'5', m:12, t:'Evaluate LBM\'s decision to use two different approaches to HRM.', l:'250-350'} ] },
+        '2025_mj_31': { title: "Wisdom Shoes (WS)", pdf: "9609_s25_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to WS of using an environmental audit.', l:'150-225'}, { n:'2', m:8, t:'Analyse two benefits to WS of Enterprise Resource Planning (ERP).', l:'150-225'}, { n:'3(a)', m:2, t:'Refer to Table 1.4. Calculate the change in dividend yield.'}, { n:'3(b)', m:2, t:'Refer to Table 1.4. Calculate the change in P/E ratio.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on WS shareholders of the proposed changes.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the inventory turnover ratio.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of ratio analysis to WS directors.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of environmental targets to WS success.', l:'250-350'} ] },
+        '2025_mj_32': { title: "Pura AI Robots (PAIR)", pdf: "9609_s25_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to PAIR of contingency planning.', l:'150-225'}, { n:'2', m:8, t:'Analyse two likely causes of the failure of the battery supplier.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the capacity utilisation for 2025.'}, { n:'3(b)', m:2, t:'Calculate the increase in profit margin.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on PAIR of the decision to increase investment in R&D.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for the critical path.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to PAIR.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the extent to which PAIRs future success depends on external influences.', l:'250-350'} ] },
+        '2025_mj_33': { title: "We Care Products (WCP)", pdf: "9609_s25_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two ways the external influences referred to in lines 8-12 may impact on WCP.', l:'150-225'}, { n:'2', m:8, t:'Analyse two benefits to WCP of its social objectives.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the labour turnover rate at GC.'}, { n:'3(b)', m:2, t:'Calculate the cost per unit.'}, { n:'3(c)', m:12, t:'Evaluate whether Aldin should change the HRM approach at GC.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the marketing budget variance.'}, { n:'4(b)', m:12, t:'Evaluate the effectiveness of WCP’s marketing strategy.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the likely impact on WCP of the takeover of GC.', l:'250-350'} ] },
+        '2025_fm_32': { title: "Iyipada (IPA)", pdf: "9609_m25_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse one advantage and one disadvantage to IPA of changing employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two methods to improve IPA\'s liquidity.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate, for 2024, IPA\'s market share.'}, { n:'3(b)', m:2, t:'Calculate, for 2025, the expected percentage market growth.'}, { n:'3(c)', m:12, t:'Evaluate the Marketing Director\'s proposed changes to IPA\'s marketing mix.', l:'250-350'}, { n:'4(a)', m:2, t:'Complete nodes 5 and 6 on the network diagram.'}, { n:'4(b)', m:2, t:'Calculate the total float for Activity F.'}, { n:'4(c)', m:12, t:'Evaluate the benefit to IPA of Critical Path Analysis (CPA).', l:'250-350'}, { n:'5', m:12, t:'Evaluate the most likely impact on IPA of the fiscal and monetary policy changes.', l:'250-350'} ] },
 
-    '2025_mj_31': {
-        title: "Wisdom Shoes (WS)",
-        pdf: "9609_s25_in_31.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two advantages to WS of using an environmental audit.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two benefits to WS of Enterprise Resource Planning (ERP).', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Refer to Table 1.4. Calculate the change in dividend yield.' },
-            { n: '3(b)', m: 2, t: 'Refer to Table 1.4. Calculate the change in P/E ratio.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the likely impact on WS shareholders of the proposed changes.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the inventory turnover ratio.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the usefulness of ratio analysis to WS directors.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the importance of environmental targets to WS success.', l: '250-350' }
-        ]
-    },
-    '2025_mj_32': {
-        title: "Pura AI Robots (PAIR)",
-        pdf: "9609_s25_in_32.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two benefits to PAIR of contingency planning.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two likely causes of the failure of the battery supplier.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the capacity utilisation for 2025.' },
-            { n: '3(b)', m: 2, t: 'Calculate the increase in profit margin.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the likely impact on PAIR of the decision to increase investment in R&D.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the total float for the critical path.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the usefulness of Critical Path Analysis (CPA) to PAIR.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the extent to which PAIRs future success depends on external influences.', l: '250-350' }
-        ]
-    },
-    '2025_mj_33': {
-        title: "We Care Products (WCP)",
-        pdf: "9609_s25_in_33.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two ways the external influences referred to in lines 8-12 may impact on WCP.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two benefits to WCP of its social objectives.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the labour turnover rate at GC.' },
-            { n: '3(b)', m: 2, t: 'Calculate the cost per unit.' },
-            { n: '3(c)', m: 12, t: 'Evaluate whether Aldin should change the HRM approach at GC.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the marketing budget variance.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the effectiveness of WCP’s marketing strategy.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the likely impact on WCP of the takeover of GC.', l: '250-350' }
-        ]
-    },
-    // ... previous papers ...
+        /* 2024 SERIES */
+        '2024_on_31': { title: "TopoChoc Enterprises (TC)", pdf: "9609_w24_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to TC of marketing planning for the new range of chocolate bars.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to TC of setting SMART business objectives.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the current ratio for 2023.'}, { n:'3(b)', m:2, t:'Calculate the acid test ratio for 2023.'}, { n:'3(c)', m:12, t:'Evaluate whether the directors should worry about TCs liquidity.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the contribution of one chocolate bar.'}, { n:'4(b)', m:12, t:'Evaluate the proposal to produce chocolate bars.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of Total Quality Management (TQM) to TC.', l:'250-350'} ] },
+        '2024_on_32': { title: "Habesha Clean Cooking (HCC)", pdf: "9609_w24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two impacts on HCC of the increase in competition in country E.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to HCC of being a social enterprise.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the capacity utilisation for the Wonder Stove in 2023.'}, { n:'3(b)', m:2, t:'Calculate the increase in profit if production is outsourced.'}, { n:'3(c)', m:12, t:'Evaluate the decision to outsource production of the Wonder Stove.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the EST and LFT for activity F.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to HCC.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of business planning to the success of HCCs expansion into country K.', l:'250-350'} ] },
+        '2024_on_33': { title: "Australasia Fitness Factory (AFF)", pdf: "9609_w24_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two threats to AFF from changes in its external environment.', l:'150-225'}, { n:'2', m:8, t:'Analyse one advantage and one disadvantage to AFF of being a public limited company.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the return on capital employed (ROCE) for 2023.'}, { n:'3(b)', m:2, t:'Calculate the gearing ratio for 2023.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on AFF shareholders of the new share issue.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the dividend yield for 2022.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of ratio analysis to AFFs directors.', l:'250-350'}, { n:'5', m:12, t:'Evaluate whether TQM is the best way to solve customer complaint problems.', l:'250-350'} ] },
+        '2024_mj_31': { title: "Gordy Building Supplies (GBS)", pdf: "9609_s24_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to GBS of using flexible part-time employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two disadvantages to GBS of its proposed communication process innovation.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the gearing ratio.'}, { n:'3(b)', m:2, t:'Calculate the return on capital employed (ROCE).'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of ratio analysis to GBS’s directors.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for activity C.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to GBS.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the extent to which corporate social responsibility (CSR) should influence GBS’s decision to expand into new land.', l:'250-350'} ] },
+        '2024_mj_32': { title: "Soymai Farms (SF)", pdf: "9609_s24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to SF of using flexible employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two problems SF may experience when implementing total quality management (TQM).', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the inventory turnover.'}, { n:'3(b)', m:2, t:'Calculate the acid test ratio.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on SF’s shareholders of the proposed changes to the dividend policy.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the capacity utilisation.'}, { n:'4(b)', m:12, t:'Evaluate the decision to outsource production.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the impact on SF of country B becoming a member of the NFTA international trading agreement.', l:'250-350'} ] },
+        '2024_mj_33': { title: "Sunil's Clothing Company (SCC)", pdf: "9609_s24_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two impacts on SCC of the changing external influences in country Z.', l:'150-225'}, { n:'2', m:8, t:'Analyse two disadvantages to SCC of the proposed new factory.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the promotional elasticity of demand.'}, { n:'3(b)', m:2, t:'Calculate the price elasticity of demand.'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of elasticity data to SCC.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for activity B.'}, { n:'4(b)', m:12, t:'Evaluate the importance of Critical Path Analysis (CPA) to the success of the new factory.', l:'250-350'}, { n:'5', m:12, t:'Evaluate whether Sunil should use a soft or hard approach to human resource management.', l:'250-350'} ] },
+        '2024_fm_32': { title: "Clean Delivery (CD)", pdf: "9609_m24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to CD resulting from internal economies of scale.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to CD of changing to a geographical organisational structure.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the inventory turnover.'}, { n:'3(b)', m:2, t:'Calculate the return on capital employed (ROCE).'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of ratio analysis to CD’s directors.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the difference in capacity utilisation between 2022 and 2023.'}, { n:'4(b)', m:12, t:'Evaluate the importance of research and development to CD’s future success.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the impact on CD of the appreciation of country K’s exchange rate.', l:'250-350'} ] }
+    };
 
-    '2024_on_31': {
-        title: "TopoChoc Enterprises (TC)",
-        pdf: "9609_w24_in_31.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two benefits to TC of marketing planning for the new range of chocolate bars.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two advantages to TC of setting SMART business objectives.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the current ratio for 2023.' },
-            { n: '3(b)', m: 2, t: 'Calculate the acid test ratio for 2023.' },
-            { n: '3(c)', m: 12, t: 'Evaluate whether the directors should worry about TCs liquidity.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the contribution of one chocolate bar.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the proposal to produce chocolate bars.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the importance of Total Quality Management (TQM) to TC.', l: '250-350' }
-        ]
-    },
-    '2024_on_32': {
-        title: "Habesha Clean Cooking (HCC)",
-        pdf: "9609_w24_in_32.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two impacts on HCC of the increase in competition in country E.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two advantages to HCC of being a social enterprise.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the capacity utilisation for the Wonder Stove in 2023.' },
-            { n: '3(b)', m: 2, t: 'Calculate the increase in profit if production is outsourced.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the decision to outsource production of the Wonder Stove.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the EST and LFT for activity F.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the usefulness of Critical Path Analysis (CPA) to HCC.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the importance of business planning to the success of HCCs expansion into country K.', l: '250-350' }
-        ]
-    },
-    '2024_on_33': {
-        title: "Australasia Fitness Factory (AFF)",
-        pdf: "9609_w24_in_33.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two threats to AFF from changes in its external environment.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse one advantage and one disadvantage to AFF of being a public limited company.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the return on capital employed (ROCE) for 2023.' },
-            { n: '3(b)', m: 2, t: 'Calculate the gearing ratio for 2023.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the likely impact on AFF shareholders of the new share issue.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the dividend yield for 2022.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the usefulness of ratio analysis to AFFs directors.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate whether TQM is the best way to solve customer complaint problems.', l: '250-350' }
-        ]
-    },
-    '2024_mj_31': {
-        title: "Gordy Building Supplies (GBS)",
-        pdf: "9609_s24_in_31.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two advantages to GBS of using flexible part-time employment contracts.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two disadvantages to GBS of its proposed communication process innovation.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the gearing ratio.' },
-            { n: '3(b)', m: 2, t: 'Calculate the return on capital employed (ROCE).' },
-            { n: '3(c)', m: 12, t: 'Evaluate the usefulness of ratio analysis to GBS’s directors.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the total float for activity C.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the usefulness of Critical Path Analysis (CPA) to GBS.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the extent to which corporate social responsibility (CSR) should influence GBS’s decision to expand into new land.', l: '250-350' }
-        ]
-    },
-    '2024_mj_32': {
-        title: "Soymai Farms (SF)",
-        pdf: "9609_s24_in_32.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two advantages to SF of using flexible employment contracts.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two problems SF may experience when implementing total quality management (TQM).', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the inventory turnover.' },
-            { n: '3(b)', m: 2, t: 'Calculate the acid test ratio.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the likely impact on SF’s shareholders of the proposed changes to the dividend policy.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the capacity utilisation.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the decision to outsource production.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the impact on SF of country B becoming a member of the NFTA international trading agreement.', l: '250-350' }
-        ]
-    },
-    '2024_mj_33': {
-        title: "Sunil's Clothing Company (SCC)",
-        pdf: "9609_s24_in_33.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two impacts on SCC of the changing external influences in country Z.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two disadvantages to SCC of the proposed new factory.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the promotional elasticity of demand.' },
-            { n: '3(b)', m: 2, t: 'Calculate the price elasticity of demand.' },
-            { n: '3(c)', m: 12, t: 'Evaluate the usefulness of elasticity data to SCC.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the total float for activity B.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the importance of Critical Path Analysis (CPA) to the success of the new factory.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate whether Sunil should use a soft or hard approach to human resource management.', l: '250-350' }
-        ]
-    },
-    '2024_fm_32': {
-        title: "Clean Delivery (CD)",
-        pdf: "9609_m24_in_32.pdf",
-        questions: [
-            { n: '1', m: 8, t: 'Analyse two benefits to CD resulting from internal economies of scale.', l: '150-225' },
-            { n: '2', m: 8, t: 'Analyse two advantages to CD of changing to a geographical organisational structure.', l: '150-225' },
-            { n: '3(a)', m: 2, t: 'Calculate the inventory turnover.' },
-            { n: '3(b)', m: 2, t: 'Calculate the return on capital employed (ROCE).' },
-            { n: '3(c)', m: 12, t: 'Evaluate the usefulness of ratio analysis to CD’s directors.', l: '250-350' },
-            { n: '4(a)', m: 4, t: 'Calculate the difference in capacity utilisation between 2022 and 2023.' },
-            { n: '4(b)', m: 12, t: 'Evaluate the importance of research and development to CD’s future success.', l: '250-350' },
-            { n: '5', m: 12, t: 'Evaluate the impact on CD of the appreciation of country K’s exchange rate.', l: '250-350' }
-        ]
+    function getUser() { return localStorage.getItem('user'); }
+    function setUser(u) { localStorage.setItem('user', u); }
+    function getAttempts(u) { return JSON.parse(localStorage.getItem(`attempts_${u}`) || '{}'); }
+
+    function saveAttempt(u, pid, qn, data) {
+        const atts = getAttempts(u);
+        if(!atts[pid]) atts[pid] = {};
+        atts[pid][qn] = data;
+        localStorage.setItem(`attempts_${u}`, JSON.stringify(atts));
     }
-};
 
-function getUser() { return localStorage.getItem('user'); }
-function setUser(u) { localStorage.setItem('user', u); }
-function getAttempts(u) { return JSON.parse(localStorage.getItem(`attempts_${u}`) || '{}'); }
+    function tryLogin() {
+        const u = document.getElementById('u-in').value.trim();
+        const p = document.getElementById('p-in').value.trim();
+        if(p === '011406' && u.includes('.') && u.split('.').length >= 2) {
+            setUser(u);
+            const name = u.split('.')[0];
+            const cleanName = name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById('welcome-msg').innerText = `Welcome, ${cleanName}`;
+            document.getElementById('login-layer').classList.add('hidden');
+            document.getElementById('app-layer').classList.remove('hidden');
+            setView('papers');
+        } else { alert("Incorrect Credentials."); }
+    }
 
-function saveAttempt(u, pid, qn, data) {
-const atts = getAttempts(u);
-if(!atts[pid]) atts[pid] = {};
-atts[pid][qn] = data;
-localStorage.setItem(`attempts_${u}`, JSON.stringify(atts));
-}
+    function doLogout() { localStorage.removeItem('user'); location.reload(); }
 
-function tryLogin() {
-const u = document.getElementById('u-in').value.trim();
-const p = document.getElementById('p-in').value.trim();
+    function setView(viewName) {
+        ['papers', 'scorecard', 'workspace', 'formulae'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
+        document.getElementById(`view-${viewName}`).classList.remove('hidden');
+        if(viewName === 'scorecard') renderScorecard();
+    }
 
-/* LOGIN LOGIC: Check code 011406 and format name.surname.dob */
-if(p === '011406' && u.includes('.') && u.split('.').length >= 2) {
-    setUser(u);
-    const name = u.split('.')[0];
-    const cleanName = name.charAt(0).toUpperCase() + name.slice(1);
-    document.getElementById('welcome-msg').innerText = `Welcome, ${cleanName}`;
-    document.getElementById('login-layer').classList.add('hidden');
-    document.getElementById('app-layer').classList.remove('hidden');
-    setView('papers');
-} else { alert("Incorrect Credentials."); }
-}
+    function backToDash() { setView('papers'); }
+    function toggleInsert() { document.getElementById('insert-panel').classList.toggle('show'); }
 
-function doLogout() {
-localStorage.removeItem('user'); location.reload();
-}
-
-function setView(viewName) {
-['papers', 'scorecard', 'workspace', 'formulae'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
-document.getElementById(`view-${viewName}`).classList.remove('hidden');
-if(viewName === 'scorecard') renderScorecard();
-}
-
-function backToDash() { setView('papers'); }
-function toggleInsert() { document.getElementById('insert-panel').classList.toggle('show'); }
-
-function openPaper(pid) {
-const data = paperData[pid];
-const u = getUser();
-const attempts = getAttempts(u)[pid] || {};
-
-/* SET PDF SOURCE */
-document.getElementById('insert-pdf').src = data.pdf;
-
-let qHtml = `<h2 style="margin-bottom:20px; color:var(--lime-dark);">${data.title}</h2>`;
-data.questions.forEach(q => {
-const att = attempts[q.n] || {};
-const done = att.score !== undefined;
-
-let aoHtml = '';
-if(done) {
-    aoHtml = `
-    <div class="ao-breakdown">
-        <div class="ao-chip">AO1: <span>${att.ao1 || '-'}</span></div>
-        <div class="ao-chip">AO2: <span>${att.ao2 || '-'}</span></div>
-        <div class="ao-chip">AO3: <span>${att.ao3 || '-'}</span></div>
-        <div class="ao-chip">AO4: <span>${att.ao4 || '-'}</span></div>
-    </div>`;
-}
-
-qHtml += `<div class="question-card">
-<div class="q-header"><strong>Q${q.n}</strong><span class="q-badge">${q.m} Marks</span></div>
-<p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
-${q.l ? `<p class="word-limit">Limit: ${q.l} words</p>` : ''}
-<textarea id="ans_${pid}_${q.n}">${att.answer || ''}</textarea>
-<button class="submit-btn ${done ? 'completed' : ''}" onclick="submitAnswer('${pid}', '${q.n}')">${done ? '✓ Re-Evaluate' : 'Submit'}</button>
-${done ? `<div class="feedback-box">
-            <h3>Aggregate Score: ${att.score}/${q.m}</h3>
-            ${aoHtml}
-            <p><strong>Strengths:</strong> ${att.strengths}</p>
-            <p><strong>Improvements:</strong> ${att.weaknesses}</p>
-            <div class="model-answer"><strong>Model Answer:</strong><br>${att.modelAnswer}</div>
-          </div>` : ''}
-</div>`;
-});
-document.getElementById('questions-container').innerHTML = qHtml;
-setView('workspace');
-}
-
-async function submitAnswer(pid, qn) {
-const el = document.getElementById(`ans_${pid}_${qn}`);
-const btn = event.target;
-const ans = el.value.trim();
-if(!ans) return alert("Please write an answer first.");
-btn.innerText = "⏳ Marking..."; btn.disabled = true;
-try {
-const res = await fetch('https://ultimate-exam-guide.onrender.com/mark', {
-method: 'POST', headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ question: paperData[pid].questions.find(q=>q.n===qn).t, case_study: "Refer to attached PDF", answer: ans, marks: paperData[pid].questions.find(q=>q.n===qn).m })
-});
-const json = await res.json();
-saveAttempt(getUser(), pid, qn, { 
-    answer: ans, 
-    score: json.score, 
-    ao1: json.ao1, 
-    ao2: json.ao2, 
-    ao3: json.ao3, 
-    ao4: json.ao4, 
-    strengths: json.strengths, 
-    weaknesses: json.weaknesses, 
-    modelAnswer: json.model_answer 
-});
-openPaper(pid);
-} catch(e) { alert("Error: Is Terminal running?"); btn.innerText = "Retry"; btn.disabled = false; }
-}
-
-function renderScorecard() {
-    const u = getUser();
-    const allAtts = getAttempts(u);
-    
-    // 1. Calculate Summary Stats
-    let totalQuestionsAnswered = 0;
-    let totalScoreAchieved = 0;
-    let totalScorePossible = 0;
-    let papersStarted = 0;
-
-    let tableRows = '';
-
-    Object.keys(paperData).forEach(pid => {
-        const pAtts = allAtts[pid] || {};
-        const qCount = paperData[pid].questions.length;
-        const ansCount = Object.keys(pAtts).length;
+    function openPaper(pid) {
+        const data = paperData[pid];
+        const u = getUser();
+        const attempts = getAttempts(u)[pid] || {};
         
-        // Stats Logic
-        if (ansCount > 0) papersStarted++;
-        totalQuestionsAnswered += ansCount;
-
-        let pScore = 0;
-        let pMax = 0;
-
-        paperData[pid].questions.forEach(q => {
-            pMax += q.m;
-            if (pAtts[q.n]) {
-                pScore += (pAtts[q.n].score || 0);
-                // Only count "possible" score for questions actually attempted (optional logic)
-                // For global accuracy, let's track total attempted score vs total attempted max
-                totalScoreAchieved += (pAtts[q.n].score || 0);
-                totalScorePossible += q.m;
+        document.getElementById('insert-pdf').src = data.pdf;
+        
+        let qHtml = `<h2 style="margin-bottom:20px; color:var(--lime-dark);">${data.title}</h2>`;
+        data.questions.forEach(q => {
+            const att = attempts[q.n] || {};
+            const done = att.score !== undefined;
+            
+            let aoHtml = '';
+            if(done) {
+                aoHtml = `<div style="display:flex; gap:10px; flex-wrap:wrap; margin:15px 0;">
+                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO1: ${att.ao1 || '-'}</span>
+                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO2: ${att.ao2 || '-'}</span>
+                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO3: ${att.ao3 || '-'}</span>
+                    <span class="score-badge" style="background:#fff; font-size:0.8rem;">AO4: ${att.ao4 || '-'}</span>
+                </div>`;
             }
+
+            qHtml += `<div class="question-card">
+                <div class="q-header"><strong>Q${q.n}</strong><span class="q-badge">${q.m} Marks</span></div>
+                <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
+                ${q.l ? `<p class="word-limit">Limit: ${q.l} words</p>` : ''}
+                <textarea id="ans_${pid}_${q.n}">${att.answer || ''}</textarea>
+                <button class="submit-btn ${done ? 'completed' : ''}" onclick="submitAnswer('${pid}', '${q.n}')">${done ? '✓ Re-Evaluate' : 'Submit'}</button>
+                ${done ? `<div class="feedback-box">
+                            <h3>Score: ${att.score}/${q.m}</h3>
+                            ${aoHtml}
+                            <p><strong>Strengths:</strong> ${att.strengths}</p>
+                            <p><strong>Improvements:</strong> ${att.weaknesses}</p>
+                            <div style="background:#222; color:#eee; padding:15px; border-radius:10px; margin-top:10px;"><strong>Model Answer:</strong><br>${att.modelAnswer}</div>
+                          </div>` : ''}
+            </div>`;
+        });
+        document.getElementById('questions-container').innerHTML = qHtml;
+        setView('workspace');
+    }
+
+    async function submitAnswer(pid, qn) {
+        const el = document.getElementById(`ans_${pid}_${qn}`);
+        const btn = event.target;
+        const ans = el.value.trim();
+        if(!ans) return alert("Please write an answer first.");
+        btn.innerText = "⏳ Marking..."; btn.disabled = true;
+        try {
+            const res = await fetch('https://ultimate-exam-guide.onrender.com/mark', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    question: paperData[pid].questions.find(q=>q.n===qn).t, 
+                    case_study: "Refer to attached PDF", 
+                    answer: ans, 
+                    marks: paperData[pid].questions.find(q=>q.n===qn).m 
+                })
+            });
+            const json = await res.json();
+            saveAttempt(getUser(), pid, qn, { 
+                answer: ans, 
+                score: json.score, 
+                ao1: json.ao1, ao2: json.ao2, ao3: json.ao3, ao4: json.ao4,
+                strengths: json.strengths, 
+                weaknesses: json.weaknesses, 
+                modelAnswer: json.model_answer 
+            });
+            openPaper(pid);
+        } catch(e) { alert("Error: Is Terminal running?"); btn.innerText = "Retry"; btn.disabled = false; }
+    }
+
+    function renderScorecard() {
+        const u = getUser();
+        const allAtts = getAttempts(u);
+        let totalQ = 0, totalAns = 0, totalScore = 0, possibleScore = 0, papersStarted = 0;
+        let rows = '';
+
+        Object.keys(paperData).forEach(pid => {
+            const pAtts = allAtts[pid] || {};
+            const qs = paperData[pid].questions;
+            const answeredCount = Object.keys(pAtts).length;
+            if(answeredCount > 0) papersStarted++;
+            
+            let pScore = 0, pMax = 0;
+            qs.forEach(q => {
+                pMax += q.m;
+                if(pAtts[q.n]) {
+                    pScore += (pAtts[q.n].score || 0);
+                    totalScore += (pAtts[q.n].score || 0);
+                    possibleScore += q.m;
+                }
+            });
+            totalQ += qs.length;
+            totalAns += answeredCount;
+            
+            const percent = (answeredCount / qs.length) * 100;
+            
+            rows += `<tr>
+                <td><div style="font-weight:700;">${paperData[pid].title}</div><div style="font-size:0.8rem; color:#888;">${pid}</div></td>
+                <td><div class="progress-track"><div class="progress-fill" style="width:${percent}%"></div></div> <span style="font-size:0.9rem; font-weight:600;">${answeredCount}/${qs.length}</span></td>
+                <td><span class="score-badge">${pScore}/${pMax}</span></td>
+                <td>${answeredCount > 0 ? `<button class="reset-icon-btn" onclick="resetPaper('${pid}')">Reset</button>` : '-'}</td>
+            </tr>`;
         });
 
-        // Table Row Logic
-        const progressPercent = (ansCount / qCount) * 100;
+        const accuracy = possibleScore > 0 ? Math.round((totalScore/possibleScore)*100) : 0;
         
-        tableRows += `
-            <tr>
-                <td>
-                    <div style="font-weight:700; font-size:1.1rem;">${paperData[pid].title}</div>
-                    <div style="color:#999; font-size:0.85rem;">${pid.replace('_', ' ').toUpperCase()}</div>
-                </td>
-                <td>
-                    <div class="progress-track"><div class="progress-fill" style="width:${progressPercent}%"></div></div>
-                    <span style="font-weight:600; color:#666;">${ansCount} / ${qCount}</span>
-                </td>
-                <td>
-                    <span class="score-badge">${pScore} / ${pMax}</span>
-                </td>
-                <td style="text-align:right;">
-                    ${ansCount > 0 ? `<button class="reset-icon-btn" onclick="resetPaper('${pid}')">Reset</button>` : '<span style="color:#ccc; font-size:0.9rem;">—</span>'}
-                </td>
-            </tr>
+        document.getElementById('stats-overview').innerHTML = `
+            <div class="stat-card"><span class="stat-value">${papersStarted}</span><span class="stat-label">Papers Started</span></div>
+            <div class="stat-card"><span class="stat-value">${totalAns}</span><span class="stat-label">Questions Solved</span></div>
+            <div class="stat-card"><span class="stat-value">${accuracy}%</span><span class="stat-label">Global Accuracy</span></div>
         `;
-    });
+        
+        document.getElementById('score-table-container').innerHTML = `<table class="modern-table"><thead><tr><th>Paper</th><th>Progress</th><th>Score</th><th>Action</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
 
-    // Calculate Global Accuracy
-    const globalAccuracy = totalScorePossible > 0 
-        ? Math.round((totalScoreAchieved / totalScorePossible) * 100) 
-        : 0;
+    function resetPaper(pid) {
+        if(confirm("Delete all answers for this paper?")) {
+            const u = getUser();
+            const atts = getAttempts(u);
+            delete atts[pid];
+            localStorage.setItem(`attempts_${u}`, JSON.stringify(atts));
+            renderScorecard();
+        }
+    }
+    function resetAll() {
+        if(confirm("WIPE ALL DATA?")) { localStorage.clear(); location.reload(); }
+    }
 
-    // 2. Render Summary Cards
-    document.getElementById('stats-overview').innerHTML = `
-        <div class="stat-card">
-            <span class="stat-value">${papersStarted}</span>
-            <span class="stat-label">Papers Started</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value">${totalQuestionsAnswered}</span>
-            <span class="stat-label">Questions Solved</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-value">${globalAccuracy}%</span>
-            <span class="stat-label">Global Accuracy</span>
-        </div>
-    `;
-
-    // 3. Render Table
-    document.getElementById('score-table-container').innerHTML = `
-        <table class="modern-table">
-            <thead>
-                <tr>
-                    <th style="text-align:left;">Paper Name</th>
-                    <th style="text-align:left;">Progress</th>
-                    <th style="text-align:left;">Total Score</th>
-                    <th style="text-align:right;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${tableRows}
-            </tbody>
-        </table>
-    `;
-}
-
-function resetPaper(pid) {
-if(confirm("Delete all answers for this paper?")) {
-const u = getUser();
-const atts = getAttempts(u);
-delete atts[pid];
-localStorage.setItem(`attempts_${u}`, JSON.stringify(atts));
-renderScorecard();
-}
-}
-function resetAll() {
-if(confirm("WIPE ALL DATA?")) { localStorage.clear(); location.reload(); }
-}
-
-if(getUser()) { 
-    const u = getUser();
-    const name = u.split('.')[0];
-    const cleanName = name.charAt(0).toUpperCase() + name.slice(1);
-    document.getElementById('welcome-msg').innerText = `Welcome, ${cleanName}`;
-    document.getElementById('login-layer').classList.add('hidden'); 
-    document.getElementById('app-layer').classList.remove('hidden'); 
-    setView('papers'); 
-}
+    if(getUser()) { 
+        const u = getUser();
+        const name = u.split('.')[0];
+        const cleanName = name.charAt(0).toUpperCase() + name.slice(1);
+        document.getElementById('welcome-msg').innerText = `Welcome, ${cleanName}`;
+        document.getElementById('login-layer').classList.add('hidden'); 
+        document.getElementById('app-layer').classList.remove('hidden'); 
+        setView('papers'); 
+    }
 </script>
 </body>
 </html>
