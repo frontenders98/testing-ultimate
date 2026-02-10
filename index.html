@@ -224,6 +224,61 @@
         padding: 4px 10px;
         border-radius: 20px;
     }
+    /* === UPGRADED FEEDBACK & MODEL ANSWER STYLES === */
+
+/* 1. The Container for Feedback */
+.feedback-box {
+    margin-top: 25px;
+    background: #f8fff8; /* Light green tint for success feel */
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--lime-primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* 2. Feedback Headers (Score, Strengths, etc.) */
+.feedback-box h3 {
+    margin-top: 0;
+    color: var(--lime-dark);
+    font-size: 1.4rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* 3. CRITICAL: This makes the paragraphs show up! */
+.feedback-box p {
+    line-height: 1.8;       /* Better readability */
+    color: #444;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    white-space: pre-wrap;  /* <--- THIS IS THE MAGIC LINE */
+}
+
+/* 4. Model Answer Box (Dark Mode Style) */
+.model-answer-box {
+    white-space: pre-wrap;  /* Preserves formatting in model answer too */
+    line-height: 1.7;       
+    font-family: 'Inter', sans-serif;
+    background: #1e1e1e;    
+    color: #e0e0e0;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--lime-primary);
+}
+
+/* 5. Strong Tags (e.g. "Strengths:") */
+.feedback-box strong {
+    color: #1a1a1a;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
 </style>
 </head>
