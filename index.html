@@ -260,6 +260,15 @@ textarea.expanded {
 .toggle-insert { display: none; margin-bottom: 15px; background: #eee; padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; }
 @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; height: auto; } .insert-panel { display: none; height: 400px; } .insert-panel.show { display: block; } .toggle-insert { display: block; } }
 
+/* TUTOR BTN STYLES */
+.tutor-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+.tutor-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
 
 </style>
 </head>
@@ -289,9 +298,10 @@ textarea.expanded {
         <button class="nav-btn active" onclick="setView('papers')">Papers</button>
         <button class="nav-btn" onclick="setView('formulae')">Formulae</button>
         <button class="nav-btn" onclick="setView('definitions')">Definitions</button>
+        <button class="nav-btn tip-nav-btn" onclick="setView('tips')" title="Exam Tips" style="font-size: 1.3rem;">💡</button>
         <button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
         <button class="nav-btn" onclick="setView('leaderboard')">🏆 Leaderboard</button>
-                <button class="nav-btn tip-nav-btn" onclick="setView('tips')" title="Exam Tips" style="font-size: 1.3rem;">💡</button>
+        <button class="nav-btn tutor-btn" onclick="window.location.href='tutor.html'">📚 Tutor</button>
         <button class="nav-btn" onclick="doLogout()">Logout</button>
     </div>
 </div>
@@ -538,7 +548,7 @@ const ALLOWED_USERS = {
     "Biswajit.Saha": "general",
     "Surjayu.Sanyal": "rizz",
     "Shreyas.Bhattacharya": "A....",
-    "Abdul.Rehan": "jipmat"  // This is your login
+    "Abdul.Rehan": "jipmat"
 };
 
 // === ORIGINAL PAPER DATA + CORRECTED 2024 QUESTIONS ===
@@ -596,7 +606,7 @@ function tryLogin() {
 function doLogout() { localStorage.removeItem('user'); location.reload(); }
 
 function setView(viewName) {
-   ['papers', 'scorecard', 'workspace', 'formulae', 'definitions', 'leaderboard', 'tips'].forEach(v => {
+    ['papers', 'scorecard', 'workspace', 'formulae', 'definitions', 'leaderboard', 'tips'].forEach(v => {
         const el = document.getElementById(`view-${v}`);
         if(el) el.classList.add('hidden');
     });
@@ -639,7 +649,7 @@ function openPaper(pid) {
             <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
             ${q.l ? `<p class="word-limit">Limit: ${q.l} words</p>` : ''}
             
-            <button class="expand-btn" onclick="toggleExpand('ans_${pid}_${q.n}')">⤢ Expand</button>
+            <button class="expand-btn" id="btn_exp_${pid}_${q.n}" onclick="toggleExpand('ans_${pid}_${q.n}', 'btn_exp_${pid}_${q.n}')">⤢ Expand</button>
             <textarea id="ans_${pid}_${q.n}" oninput="updateWordCount(this, '${q.l}')">${att.answer || ''}</textarea>
             <div id="wc_${pid}_${q.n}" class="word-count">0 words</div>
 
@@ -683,14 +693,29 @@ function updateWordCount(el, limitStr) {
     }
 }
 
-function toggleExpand(id) {
-    const el = document.getElementById(id);
-    if(el) el.classList.toggle('expanded');
+function toggleExpand(textAreaId, btnId) {
+    const el = document.getElementById(textAreaId);
+    const btn = document.getElementById(btnId);
+    if(el) {
+        el.classList.toggle('expanded');
+        if(el.classList.contains('expanded')) {
+            btn.innerText = "⤡ Shrink";
+        } else {
+            btn.innerText = "⤢ Expand";
+        }
+    }
 }
 
 function toggleInsertMaximize() {
     const el = document.getElementById('insert-panel');
+    const btn = document.querySelector('.maximize-insert-btn');
     el.classList.toggle('fullscreen');
+    
+    if(el.classList.contains('fullscreen')) {
+        btn.innerText = "⤡ Minimize";
+    } else {
+        btn.innerText = "⤢ Maximize";
+    }
 }
 
 async function submitAnswer(pid, qn) {
@@ -735,6 +760,20 @@ async function submitAnswer(pid, qn) {
     }
 }
 
+// === ADMIN DELETE FUNCTION ===
+async function deleteUser(name) {
+    if(!confirm(`Are you sure you want to delete ${name} from the leaderboard?`)) return;
+    try {
+        const res = await fetch(`https://ultimate-exam-guide.onrender.com/delete_user?name=${name}`);
+        if(res.ok) {
+            alert(`Deleted ${name}`);
+            loadLeaderboard(); 
+        } else {
+            alert("Failed to delete. Make sure app.py is updated.");
+        }
+    } catch(e) { console.error(e); alert("Connection error."); }
+}
+
 // === LEADERBOARD LOGIC ===
 async function syncScore() {
     const u = getUser();
@@ -777,8 +816,9 @@ async function loadLeaderboard() {
     try {
         const res = await fetch('https://ultimate-exam-guide.onrender.com/leaderboard');
         const data = await res.json();
+        const isAdmin = (getUser() === 'admin');
         
-        let html = `<table class="modern-table"><thead><tr><th>Rank</th><th>Student</th><th>Papers</th><th>Total Score</th></tr></thead><tbody>`;
+        let html = `<table class="modern-table"><thead><tr><th>Rank</th><th>Student</th><th>Papers</th><th>Total Score</th>${isAdmin ? '<th>Action</th>' : ''}</tr></thead><tbody>`;
         
         data.forEach((entry, index) => {
             const name = entry[0];
@@ -789,11 +829,17 @@ async function loadLeaderboard() {
             else if(index === 2) badge = '🥉';
             else badge = `#${index+1}`;
             
+            let actionBtn = '';
+            if(isAdmin) {
+                actionBtn = `<button class="reset-icon-btn" style="padding:2px 8px; font-size:12px;" onclick="deleteUser('${name}')">❌</button>`;
+            }
+            
             html += `<tr>
                 <td><span style="font-size:1.2rem; font-weight:700;">${badge}</span></td>
                 <td style="font-weight:700; color:var(--text-dark);">${name}</td>
                 <td>${stats.papers}</td>
                 <td><span class="score-badge">${stats.score}</span></td>
+                ${isAdmin ? `<td>${actionBtn}</td>` : ''}
             </tr>`;
         });
         
