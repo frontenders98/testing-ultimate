@@ -22,7 +22,7 @@ if api_key:
 def get_model():
     try:
         # Try the newest model first
-        return genai.GenerativeModel('gemini-2.0-flash')
+        return genai.GenerativeModel('models/gemini-2.5-flash')
     except:
         # Fallback to the stable model if 2.0 isn't available to your key
         return genai.GenerativeModel('gemini-1.5-flash')
