@@ -427,6 +427,21 @@ function setView(viewName) {
 
 function backToDash() { setView('papers'); }
 function toggleInsert() { document.getElementById('insert-panel').classList.toggle('show'); }
+    
+    function checkWords(el, limit) {
+    if(!limit) return;
+    // Count words by splitting on whitespace
+    const count = el.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const [min, max] = limit.split('-').map(Number);
+    
+    // Find the word count display div
+    const wcDiv = document.getElementById(el.id.replace('ans', 'wc'));
+    if (wcDiv) {
+        wcDiv.innerText = `${count} words`;
+        // Apply CSS classes based on limits
+        wcDiv.className = (count >= min && count <= max) ? 'word-count good' : 'word-count bad';
+    }
+}
 
 function openPaper(pid) {
     const data = paperData[pid];
@@ -455,8 +470,8 @@ function openPaper(pid) {
             <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
             ${q.l ? `<p class="word-limit">Limit: ${q.l} words</p>` : ''}
             
-            <textarea id="ans_${pid}_${q.n}" oninput="updateWordCount(this, '${q.l}')">${att.answer || ''}</textarea>
-            <div id="wc_${pid}_${q.n}" class="word-count">0 words</div>
+            <textarea id="ans_${pid}_${q.n}" oninput="checkWords(this, '${q.l}')">${att.answer || ''}</textarea>
+<div id="wc_${pid}_${q.n}" class="word-count">0 words</div>
 
             <button class="submit-btn ${done ? 'completed' : ''}" onclick="submitAnswer('${pid}', '${q.n}')">${done ? '✓ Re-Evaluate' : 'Submit for Strict Marking'}</button>
             
@@ -471,6 +486,11 @@ function openPaper(pid) {
     });
     document.getElementById('questions-container').innerHTML = qHtml;
     setView('workspace');
+    
+    data.questions.forEach(q => {
+    const el = document.getElementById(`ans_${pid}_${q.n}`);
+    if(el) checkWords(el, q.l);
+});
     
     // Init word counts
     data.questions.forEach(q => {
