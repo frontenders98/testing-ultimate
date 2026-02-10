@@ -172,16 +172,6 @@ line-height: 1.4;
     color: white;
 }
 
-/* If Tutor needs to stand out slightly, use this */
-.tutor-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.tutor-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-};
 
 .series-header { margin: 40px 0 20px 0; border-bottom: 2px solid #eee; padding-bottom: 10px; display: flex; align-items: baseline; gap: 15px; }
 .year-big { font-size: 2rem; font-weight: 800; color: #ccc; }
@@ -323,7 +313,6 @@ textarea.expanded {
         <button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
         <button class="nav-btn" onclick="setView('leaderboard')">🏆 Leaderboard</button>
         <button class="nav-btn tip-nav-btn" onclick="setView('tips')" title="Exam Tips" style="font-size: 1.3rem;">💡</button>
-        <button class="nav-btn tutor-btn" onclick="window.location.href='tutor.html'">📚 Tutor</button>
         <button class="nav-btn" onclick="doLogout()">Logout</button>
     </div>
 </div>
