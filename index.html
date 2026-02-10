@@ -553,13 +553,15 @@ line-height: 1.6;
 
 <div class="login-screen" id="login-layer">
 
-<div class="login-card">
+<div class="login-card" style="text-align: left;">
 
-<h1>🎯 A-Level Business</h1>
+<img src="logo.png" alt="Logo" style="width: 100%; height: auto; display: block; margin-bottom: 20px;">
 
-<input type="email" class="login-input" id="email-input" placeholder="Enter Email (e.g., john.doe@example.com)">
+<input type="text" id="u-in" class="login-input" placeholder="username">
 
-<button class="submit-btn" onclick="login()" style="margin-top:15px;">Continue</button>
+<input type="password" id="p-in" class="login-input" placeholder="******">
+
+<button class="submit-btn" onclick="tryLogin()">Sign in</button>
 
 </div>
 
@@ -581,23 +583,30 @@ line-height: 1.6;
 
 <div class="header-left">
 
-<img src="logo.png" class="app-logo">
-
-<h2 id="welcome-msg" style="margin:0; color: var(--lime-dark); font-weight:800;">Welcome</h2>
-
-</div>
+<img src="logo.png" alt="Logo" class="app-logo" onerror="this.style.display='none'">
 
 <div>
 
-<button class="nav-btn active" onclick="setView('papers')">Papers</button>
+<h2 style="color:var(--lime-dark); margin:0;">Business Practice</h2>
 
-<button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
+<div id="welcome-msg" class="welcome-text"></div>
+
+</div>
+
+</div>
+
+<div class="nav">
+
+<button class="nav-btn active" onclick="setView('papers')">Papers</button>
 
 <button class="nav-btn" onclick="setView('formulae')">Formulae</button>
 
 <button class="nav-btn" onclick="setView('definitions')">Definitions</button>
 
-<button class="nav-btn" onclick="logout()" style="color:#ff4757; font-weight:800;">Logout</button>
+
+<button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
+
+<button class="nav-btn" onclick="doLogout()">Logout</button>
 
 </div>
 
@@ -609,55 +618,51 @@ line-height: 1.6;
 
 <!-- View: Papers List -->
 
-<div id="view-papers" class="hidden">
+<div id="view-papers">
 
-<!-- 2023 -->
 
-<div class="series-header"><span class="year-big">2023</span><span class="series-name">May/June</span></div>
+<div class="series-header"><div class="year-big">2024</div><div class="series-name">Feb / March Series</div></div>
 
 <div class="papers-grid">
 
-<div class="paper-card" onclick="openPaper('9609_s23_qp_31')"><span class="paper-tag">Paper 31</span><h3>Corporate Strategy</h3></div>
-
-<div class="paper-card" onclick="openPaper('9609_s23_qp_32')"><span class="paper-tag">Paper 32</span><h3>Case Study (IPA)</h3></div>
-
-<div class="paper-card" onclick="openPaper('9609_s23_qp_33')"><span class="paper-tag">Paper 33</span><h3>Business Decisions</h3></div>
+<div class="paper-card" onclick="openPaper('2024_fm_32')"><span class="paper-tag">9609/32</span><h3>Clean Delivery (CD)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
 </div>
 
-<div class="series-header"><span class="year-big">2023</span><span class="series-name">Oct/Nov</span></div>
+
+<div class="series-header"><div class="year-big">2024</div><div class="series-name">May / June Series</div></div>
 
 <div class="papers-grid">
 
-<div class="paper-card" onclick="openPaper('9609_w23_qp_31')"><span class="paper-tag">Paper 31</span><h3>Corporate Strategy</h3></div>
+<div class="paper-card" onclick="openPaper('2024_mj_31')"><span class="paper-tag">9609/31</span><h3>Gordy Building Supplies (GBS)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
-<div class="paper-card" onclick="openPaper('9609_w23_qp_32')"><span class="paper-tag">Paper 32</span><h3>Case Study</h3></div>
+<div class="paper-card" onclick="openPaper('2024_mj_32')"><span class="paper-tag">9609/32</span><h3>Soymai Farms (SF)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
-<div class="paper-card" onclick="openPaper('9609_w23_qp_33')"><span class="paper-tag">Paper 33</span><h3>Business Decisions</h3></div>
+<div class="paper-card" onclick="openPaper('2024_mj_33')"><span class="paper-tag">9609/33</span><h3>Sunil's Clothing Company (SCC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
 </div>
 
-<!-- 2024 -->
 
-<div class="series-header"><span class="year-big">2024</span><span class="series-name">Feb/March</span></div>
+
+<div class="series-header"><div class="year-big">2024</div><div class="series-name">Oct / Nov Series</div></div>
 
 <div class="papers-grid">
 
-<div class="paper-card" onclick="openPaper('9609_m24_qp_32')"><span class="paper-tag">Paper 32</span><h3>Case Study</h3></div>
+<div class="paper-card" onclick="openPaper('2024_on_31')"><span class="paper-tag">9609/31</span><h3>TopoChoc Enterprises (TC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
-<div class="paper-card" onclick="openPaper('9609_m24_qp_33')"><span class="paper-tag">Paper 33</span><h3>Business Decisions</h3></div>
+<div class="paper-card" onclick="openPaper('2024_on_32')"><span class="paper-tag">9609/32</span><h3>Habesha Clean Cooking (HCC)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
+
+<div class="paper-card" onclick="openPaper('2024_on_33')"><span class="paper-tag">9609/33</span><h3>Australasia Fitness Factory (AFF)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
 </div>
 
-<div class="series-header"><span class="year-big">2024</span><span class="series-name">May/June</span></div>
+
+
+<div class="series-header"><div class="year-big">2025</div><div class="series-name">Feb / March Series</div></div>
 
 <div class="papers-grid">
 
-<div class="paper-card" onclick="openPaper('9609_s24_qp_31')"><span class="paper-tag">Paper 31</span><h3>Corporate Strategy</h3></div>
-
-<div class="paper-card" onclick="openPaper('9609_s24_qp_32')"><span class="paper-tag">Paper 32</span><h3>Case Study</h3></div>
-
-<div class="paper-card" onclick="openPaper('9609_s24_qp_33')"><span class="paper-tag">Paper 33</span><h3>Business Decisions</h3></div>
+<div class="paper-card" onclick="openPaper('2025_fm_32')"><span class="paper-tag">9609/32</span><h3>Iyipada (IPA)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
 
 </div>
 
@@ -901,11 +906,11 @@ line-height: 1.6;
 
 <div id="view-workspace" class="hidden">
 
-<div class="toggle-insert" onclick="document.querySelector('.insert-panel').classList.toggle('show')">📄 Toggle Insert</div>
+<div class="toggle-insert" onclick="toggleInsert()">📄 Toggle Insert</div>
 
 <div class="workspace">
 
-<div class="insert-panel"><iframe class="insert-pdf-frame" id="pdf-frame"></iframe></div>
+<div class="insert-panel" id="insert-panel"><iframe class="insert-pdf-frame" id="insert-pdf"></iframe></div>
 
 <div class="questions-panel" id="questions-container"></div>
 
@@ -925,207 +930,156 @@ line-height: 1.6;
 
 const paperData = {
 
-'9609_s23_qp_31': { title: 'May/June 2023 - Paper 31', pdf: '9609_s23_qp_31.pdf', questions: [
+/* 2025 SERIES */
 
-{n:'1a', t:'Define the term "corporate culture".', m:2},
+'2025_mj_31': { title: "Wisdom Shoes (WS)", pdf: "9609_s25_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to WS of using an environmental audit.', l:'150-225'}, { n:'2', m:8, t:'Analyse two benefits to WS of Enterprise Resource Planning (ERP).', l:'150-225'}, { n:'3(a)', m:2, t:'Refer to Table 1.4. Calculate the change in dividend yield.'}, { n:'3(b)', m:2, t:'Refer to Table 1.4. Calculate the change in P/E ratio.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on WS shareholders of the proposed changes.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the inventory turnover ratio.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of ratio analysis to WS directors.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of environmental targets to WS success.', l:'250-350'} ] },
 
-{n:'1b', t:'Using examples from the case study, explain two benefits of a strong corporate culture to IPA.', m:8},
+'2025_mj_32': { title: "Pura AI Robots (PAIR)", pdf: "9609_s25_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to PAIR of contingency planning.', l:'150-225'}, { n:'2', m:8, t:'Analyse two likely causes of the failure of the battery supplier.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the capacity utilisation for 2025.'}, { n:'3(b)', m:2, t:'Calculate the increase in profit margin.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on PAIR of the decision to increase investment in R&D.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for the critical path.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to PAIR.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the extent to which PAIRs future success depends on external influences.', l:'250-350'} ] },
 
-{n:'2', t:'Analyse two ways IPA could improve employee motivation.', m:8},
+'2025_mj_33': { title: "We Care Products (WCP)", pdf: "9609_s25_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two ways the external influences referred to in lines 8-12 may impact on WCP.', l:'150-225'}, { n:'2', m:8, t:'Analyse two benefits to WCP of its social objectives.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the labour turnover rate at GC.'}, { n:'3(b)', m:2, t:'Calculate the cost per unit.'}, { n:'3(c)', m:12, t:'Evaluate whether Aldin should change the HRM approach at GC.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the marketing budget variance.'}, { n:'4(b)', m:12, t:'Evaluate the effectiveness of WCP's marketing strategy.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the likely impact on WCP of the takeover of GC.', l:'250-350'} ] },
 
-{n:'3', t:'Evaluate whether IPA should expand into international markets. Justify your recommendation.', m:12}
+'2025_fm_32': { title: "Iyipada (IPA)", pdf: "9609_m25_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse one advantage and one disadvantage to IPA of changing employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two methods to improve IPA\'s liquidity.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate, for 2024, IPA\'s market share.'}, { n:'3(b)', m:2, t:'Calculate, for 2025, the expected percentage market growth.'}, { n:'3(c)', m:12, t:'Evaluate the Marketing Director\'s proposed changes to IPA\'s marketing mix.', l:'250-350'}, { n:'4(a)', m:2, t:'Complete nodes 5 and 6 on the network diagram.'}, { n:'4(b)', m:2, t:'Calculate the total float for Activity F.'}, { n:'4(c)', m:12, t:'Evaluate the benefit to IPA of Critical Path Analysis (CPA).', l:'250-350'}, { n:'5', m:12, t:'Evaluate the most likely impact on IPA of the fiscal and monetary policy changes.', l:'250-350'} ] },
 
-]},
 
-'9609_s23_qp_32': { title: 'May/June 2023 - Paper 32 (IPA)', pdf: '9609_s23_qp_32.pdf', questions: [
 
-{n:'1', t:'Analyse the impact of inflation on IPA\'s pricing strategy.', m:8},
+/* 2024 SERIES */
 
-{n:'2', t:'Evaluate the use of cost leadership strategy by IPA. Should IPA continue with this approach?', m:12}
+'2024_on_31': { title: "TopoChoc Enterprises (TC)", pdf: "9609_w24_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to TC of marketing planning for the new range of chocolate bars.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to TC of setting SMART business objectives.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the current ratio for 2023.'}, { n:'3(b)', m:2, t:'Calculate the acid test ratio for 2023.'}, { n:'3(c)', m:12, t:'Evaluate whether the directors should worry about TCs liquidity.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the contribution of one chocolate bar.'}, { n:'4(b)', m:12, t:'Evaluate the proposal to produce chocolate bars.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of Total Quality Management (TQM) to TC.', l:'250-350'} ] },
 
-]},
+'2024_on_32': { title: "Habesha Clean Cooking (HCC)", pdf: "9609_w24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two impacts on HCC of the increase in competition in country E.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to HCC of being a social enterprise.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the capacity utilisation for the Wonder Stove in 2023.'}, { n:'3(b)', m:2, t:'Calculate the increase in profit if production is outsourced.'}, { n:'3(c)', m:12, t:'Evaluate the decision to outsource production of the Wonder Stove.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the EST and LFT for activity F.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to HCC.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the importance of business planning to the success of HCCs expansion into country K.', l:'250-350'} ] },
 
-'9609_s23_qp_33': { title: 'May/June 2023 - Paper 33', pdf: '9609_s23_qp_33.pdf', questions: [
+'2024_on_33': { title: "Australasia Fitness Factory (AFF)", pdf: "9609_w24_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two threats to AFF from changes in its external environment.', l:'150-225'}, { n:'2', m:8, t:'Analyse one advantage and one disadvantage to AFF of being a public limited company.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the return on capital employed (ROCE) for 2023.'}, { n:'3(b)', m:2, t:'Calculate the gearing ratio for 2023.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on AFF shareholders of the new share issue.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the dividend yield for 2022.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of ratio analysis to AFFs directors.', l:'250-350'}, { n:'5', m:12, t:'Evaluate whether TQM is the best way to solve customer complaint problems.', l:'250-350'} ] },
 
-{n:'1', t:'Explain two factors that influence the choice of location for a business.', m:8},
+'2024_mj_31': { title: "Gordy Building Supplies (GBS)", pdf: "9609_s24_in_31.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to GBS of using flexible part-time employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two disadvantages to GBS of its proposed communication process innovation.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the gearing ratio.'}, { n:'3(b)', m:2, t:'Calculate the return on capital employed (ROCE).'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of ratio analysis to GBS's directors.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for activity C.'}, { n:'4(b)', m:12, t:'Evaluate the usefulness of Critical Path Analysis (CPA) to GBS.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the extent to which corporate social responsibility (CSR) should influence GBS's decision to expand into new land.', l:'250-350'} ] },
 
-{n:'2', t:'Evaluate the impact of technological change on business decision-making.', m:12}
+'2024_mj_32': { title: "Soymai Farms (SF)", pdf: "9609_s24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two advantages to SF of using flexible employment contracts.', l:'150-225'}, { n:'2', m:8, t:'Analyse two problems SF may experience when implementing total quality management (TQM).', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the inventory turnover.'}, { n:'3(b)', m:2, t:'Calculate the acid test ratio.'}, { n:'3(c)', m:12, t:'Evaluate the likely impact on SF's shareholders of the proposed changes to the dividend policy.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the capacity utilisation.'}, { n:'4(b)', m:12, t:'Evaluate the decision to outsource production.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the impact on SF of country B becoming a member of the NFTA international trading agreement.', l:'250-350'} ] },
 
-]},
+'2024_mj_33': { title: "Sunil's Clothing Company (SCC)", pdf: "9609_s24_in_33.pdf", questions: [ { n:'1', m:8, t:'Analyse two impacts on SCC of the changing external influences in country Z.', l:'150-225'}, { n:'2', m:8, t:'Analyse two disadvantages to SCC of the proposed new factory.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the promotional elasticity of demand.'}, { n:'3(b)', m:2, t:'Calculate the price elasticity of demand.'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of elasticity data to SCC.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the total float for activity B.'}, { n:'4(b)', m:12, t:'Evaluate the importance of Critical Path Analysis (CPA) to the success of the new factory.', l:'250-350'}, { n:'5', m:12, t:'Evaluate whether Sunil should use a soft or hard approach to human resource management.', l:'250-350'} ] },
 
-'9609_w23_qp_31': { title: 'Oct/Nov 2023 - Paper 31', pdf: '9609_w23_qp_31.pdf', questions: [
-
-{n:'1', t:'Define "market segmentation".', m:2},
-
-{n:'2', t:'Analyse two methods of market research a business could use.', m:8}
-
-]},
-
-'9609_w23_qp_32': { title: 'Oct/Nov 2023 - Paper 32', pdf: '9609_w23_qp_32.pdf', questions: [
-
-{n:'1', t:'Analyse the benefits of using social media marketing.', m:8}
-
-]},
-
-'9609_w23_qp_33': { title: 'Oct/Nov 2023 - Paper 33', pdf: '9609_w23_qp_33.pdf', questions: [
-
-{n:'1', t:'Evaluate the importance of cash flow management to a business.', m:12}
-
-]},
-
-'9609_m24_qp_32': { title: 'Feb/March 2024 - Paper 32', pdf: '9609_m24_qp_32.pdf', questions: [
-
-{n:'1', t:'Analyse the role of leadership in achieving business objectives.', m:8}
-
-]},
-
-'9609_m24_qp_33': { title: 'Feb/March 2024 - Paper 33', pdf: '9609_m24_qp_33.pdf', questions: [
-
-{n:'1', t:'Evaluate the use of ratio analysis in financial decision-making.', m:12}
-
-]},
-
-'9609_s24_qp_31': { title: 'May/June 2024 - Paper 31', pdf: '9609_s24_qp_31.pdf', questions: [
-
-{n:'1', t:'Define "lean production".', m:2},
-
-{n:'2', t:'Analyse the impact of quality management on business performance.', m:8}
-
-]},
-
-'9609_s24_qp_32': { title: 'May/June 2024 - Paper 32', pdf: '9609_s24_qp_32.pdf', questions: [
-
-{n:'1', t:'Evaluate whether a business should use penetration pricing or price skimming.', m:12}
-
-]},
-
-'9609_s24_qp_33': { title: 'May/June 2024 - Paper 33', pdf: '9609_s24_qp_33.pdf', questions: [
-
-{n:'1', t:'Analyse the factors influencing the choice of organizational structure.', m:8}
-
-]}
+'2024_fm_32': { title: "Clean Delivery (CD)", pdf: "9609_m24_in_32.pdf", questions: [ { n:'1', m:8, t:'Analyse two benefits to CD resulting from internal economies of scale.', l:'150-225'}, { n:'2', m:8, t:'Analyse two advantages to CD of changing to a geographical organisational structure.', l:'150-225'}, { n:'3(a)', m:2, t:'Calculate the inventory turnover.'}, { n:'3(b)', m:2, t:'Calculate the return on capital employed (ROCE).'}, { n:'3(c)', m:12, t:'Evaluate the usefulness of ratio analysis to CD's directors.', l:'250-350'}, { n:'4(a)', m:4, t:'Calculate the difference in capacity utilisation between 2022 and 2023.'}, { n:'4(b)', m:12, t:'Evaluate the importance of research and development to CD's future success.', l:'250-350'}, { n:'5', m:12, t:'Evaluate the impact on CD of the appreciation of country K's exchange rate.', l:'250-350'} ] }
 
 };
 
 
 
-function login() {
+function getUser() { return localStorage.getItem('user'); }
 
-const email = document.getElementById('email-input').value.trim();
+function setUser(u) { localStorage.setItem('user', u); }
 
-if (!email || !email.includes('@')) return alert('Please enter a valid email.');
-
-localStorage.setItem('loggedUser', email);
-
-location.reload();
-
-}
+function getAttempts(u) { return JSON.parse(localStorage.getItem(`attempts_${u}`) || '{}'); }
 
 
 
-function logout() {
+function saveAttempt(u, pid, qn, data) {
 
-localStorage.removeItem('loggedUser');
+const atts = getAttempts(u);
 
-location.reload();
+if(!atts[pid]) atts[pid] = {};
+
+atts[pid][qn] = data;
+
+localStorage.setItem(`attempts_${u}`, JSON.stringify(atts));
 
 }
 
 
 
-function getUser() { return localStorage.getItem('loggedUser'); }
+function tryLogin() {
 
+const u = document.getElementById('u-in').value.trim();
 
+const p = document.getElementById('p-in').value.trim();
 
-function getAttempts(user) {
+if(p === '011406' && u.includes('.') && u.split('.').length >= 2) {
 
-const raw = localStorage.getItem(`attempts_${user}`);
+setUser(u);
 
-return raw ? JSON.parse(raw) : {};
+const name = u.split('.')[0];
+
+const cleanName = name.charAt(0).toUpperCase() + name.slice(1);
+
+document.getElementById('welcome-msg').innerText = `Welcome, ${cleanName}`;
+
+document.getElementById('login-layer').classList.add('hidden');
+
+document.getElementById('app-layer').classList.remove('hidden');
+
+setView('papers');
+
+} else { alert("Incorrect Credentials."); }
 
 }
 
 
 
-function saveAttempt(user, paperId, qn, data) {
-
-const all = getAttempts(user);
-
-if (!all[paperId]) all[paperId] = {};
-
-all[paperId][qn] = data;
-
-localStorage.setItem(`attempts_${user}`, JSON.stringify(all));
-
-}
+function doLogout() { localStorage.removeItem('user'); location.reload(); }
 
 
 
-function setView(v) {
+function setView(viewName) {
 
-['view-papers', 'view-scorecard', 'view-formulae', 'view-definitions', 'view-workspace'].forEach(id => {
+// Added 'definitions' to this list so it hides properly when switching tabs
 
-document.getElementById(id).classList.add('hidden');
+['papers', 'scorecard', 'workspace', 'formulae', 'definitions'].forEach(v => {
+
+const el = document.getElementById(`view-${v}`);
+
+if(el) el.classList.add('hidden');
 
 });
 
-document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-if (v === 'papers') {
+document.getElementById(`view-${viewName}`).classList.remove('hidden');
 
-document.getElementById('view-papers').classList.remove('hidden');
 
-document.querySelectorAll('.nav-btn')[0].classList.add('active');
+// Update active button state
 
-} else if (v === 'scorecard') {
+document.querySelectorAll('.nav-btn').forEach(btn => {
 
-document.getElementById('view-scorecard').classList.remove('hidden');
+btn.classList.remove('active');
 
-renderScorecard();
+if(btn.innerText.toLowerCase() === viewName) btn.classList.add('active');
 
-document.querySelectorAll('.nav-btn')[1].classList.add('active');
+});
 
-} else if (v === 'formulae') {
 
-document.getElementById('view-formulae').classList.remove('hidden');
 
-document.querySelectorAll('.nav-btn')[2].classList.add('active');
-
-} else if (v === 'definitions') {
-
-document.getElementById('view-definitions').classList.remove('hidden');
-
-document.querySelectorAll('.nav-btn')[3].classList.add('active');
-
-} else if (v === 'workspace') {
-
-document.getElementById('view-workspace').classList.remove('hidden');
+if(viewName === 'scorecard') renderScorecard();
 
 }
 
-}
+
+
+function backToDash() { setView('papers'); }
+
+function toggleInsert() { document.getElementById('insert-panel').classList.toggle('show'); }
 
 
 
 function openPaper(pid) {
 
-const p = paperData[pid];
+const data = paperData[pid];
 
-document.getElementById('pdf-frame').src = p.pdf;
+const u = getUser();
 
-const atts = getAttempts(getUser())[pid] || {};
+const attempts = getAttempts(u)[pid] || {};
 
-let qHtml = '';
 
-p.questions.forEach(q => {
+document.getElementById('insert-pdf').src = data.pdf;
 
-const att = atts[q.n] || {};
+
+let qHtml = `<h2 style="margin-bottom:20px; color:var(--lime-dark);">${data.title}</h2>`;
+
+data.questions.forEach(q => {
+
+const att = attempts[q.n] || {};
 
 const done = att.score !== undefined;
 
+
 let aoHtml = '';
 
-if (done) {
+if(done) {
 
 aoHtml = `<div class="ao-breakdown">
 
@@ -1172,6 +1126,8 @@ qHtml += `<div class="question-card">
 <div class="q-header"><strong>Q${q.n}</strong><span class="q-badge">${q.m} Marks</span></div>
 
 <p style="font-weight:600; margin-bottom:10px;">${q.t}</p>
+
+${q.l ? `<p class="word-limit">Target: ${q.l} words</p>` : ''}
 
 <div class="answer-controls">
 
@@ -1243,7 +1199,7 @@ document.getElementById('questions-container').innerHTML = qHtml;
 
 // Update all word counts on page load
 
-p.questions.forEach(q => {
+data.questions.forEach(q => {
 
 updateWordCount(pid, q.n, q.m);
 
