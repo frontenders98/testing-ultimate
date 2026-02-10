@@ -9,7 +9,7 @@
 <style>
     /* GLOBAL FONT */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
-    /* NEW FONTS (For Formula Sheet) */
+    /* NEW FONTS */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap');
 
     :root {
@@ -32,65 +32,119 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-    /* === FORMULA SHEET SPECIFIC STYLES === */
-    #view-formulae .formula-section { margin-bottom: 40px; }
-    
-    #view-formulae .chapter-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.6rem;
-        color: #1a1a1a;
-        margin-bottom: 20px;
-        border-bottom: 2px solid var(--lime-primary);
-        padding-bottom: 5px;
-        display: inline-block;
-    }
-    
-    #view-formulae .formula-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-        gap: 20px; 
-    }
-    
-    #view-formulae .formula-card { 
-        background: white; 
-        padding: 25px; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    /* === CHATBOT STYLES (NEW) === */
+    #view-chat {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
         border: 1px solid rgba(0,0,0,0.05);
-        transition: transform 0.2s ease;
-        position: relative;
         overflow: hidden;
     }
-    
-    #view-formulae .formula-card:hover { 
-        transform: translateY(-3px); 
-        border-color: var(--lime-primary);
-    }
-    
-    #view-formulae .formula-card::before {
-        content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-        background: var(--lime-primary);
+
+    .chat-header {
+        padding: 20px;
+        background: var(--lime-light);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
-    #view-formulae .f-title { 
-        font-family: 'Inter', sans-serif;
-        font-size: 0.85rem; 
-        font-weight: 600; 
-        color: #888; 
-        text-transform: uppercase; 
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-    }
-    
-    #view-formulae .f-body { 
-        font-family: 'Inter', sans-serif;
-        font-size: 1.15rem; 
-        font-weight: 500; 
-        color: #2c3e50; 
-        line-height: 1.4;
+    .chat-window {
+        flex: 1;
+        overflow-y: auto;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: #fafafa;
     }
 
-    /* === APP STYLES === */
+    .chat-msg {
+        max-width: 75%;
+        padding: 15px 20px;
+        border-radius: 18px;
+        line-height: 1.6;
+        font-size: 1rem;
+        position: relative;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .user-msg {
+        align-self: flex-end;
+        background: var(--lime-dark);
+        color: white;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 4px 15px rgba(34, 139, 34, 0.2);
+    }
+
+    .ai-msg {
+        align-self: flex-start;
+        background: white;
+        color: #333;
+        border: 1px solid #eee;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+    
+    /* Make bold text in AI messages pop */
+    .ai-msg strong { color: var(--lime-dark); font-weight: 700; }
+
+    .chat-input-area {
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    #chat-input {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #eee;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    #chat-input:focus { border-color: var(--lime-primary); }
+
+    .send-chat-btn {
+        background: var(--lime-dark);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .send-chat-btn:hover { transform: scale(1.1); background: var(--lime-primary); }
+
+
+    /* === EXISTING STYLES === */
+    #view-formulae .formula-section { margin-bottom: 40px; }
+    #view-formulae .chapter-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #1a1a1a; margin-bottom: 20px; border-bottom: 2px solid var(--lime-primary); padding-bottom: 5px; display: inline-block; }
+    #view-formulae .formula-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    #view-formulae .formula-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease; position: relative; overflow: hidden; }
+    #view-formulae .formula-card:hover { transform: translateY(-3px); border-color: var(--lime-primary); }
+    #view-formulae .formula-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--lime-primary); }
+    #view-formulae .f-title { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    #view-formulae .f-body { font-family: 'Inter', sans-serif; font-size: 1.15rem; font-weight: 500; color: #2c3e50; line-height: 1.4; }
+
     .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); z-index: 1000; }
     .login-card { background: white; padding: 50px; width: 400px; border-radius: 24px; box-shadow: var(--shadow); text-align: center; border: 1px solid var(--lime-light); }
     .login-card h1 { color: var(--lime-dark); font-weight: 800; margin-bottom: 30px; }
@@ -139,146 +193,25 @@
     textarea:focus { border-color: var(--lime-primary); outline: none; }
     .submit-btn { background: linear-gradient(135deg, var(--lime-primary) 0%, var(--lime-dark) 100%); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3); font-size: 1rem; }
     .submit-btn:disabled { background: #ccc; transform: none; box-shadow: none; }
-    .feedback-box { margin-top: 20px; background: var(--lime-light); padding: 20px; border-radius: 16px; }
+    .feedback-box { margin-top: 25px; background: #f8fff8; padding: 25px; border-radius: 16px; border: 1px solid var(--lime-primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .feedback-box h3 { margin-top: 0; color: var(--lime-dark); font-size: 1.4rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+    .feedback-box p { line-height: 1.8; color: #444; margin-bottom: 15px; font-size: 0.95rem; white-space: pre-wrap; }
+    .feedback-box strong { color: #1a1a1a; font-weight: 700; display: block; margin-bottom: 5px; font-size: 1rem; }
+    .model-answer-box { white-space: pre-wrap; line-height: 1.7; font-family: 'Inter', sans-serif; background: #1e1e1e; color: #e0e0e0; padding: 25px; border-radius: 12px; margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--lime-primary); }
+
     .hidden { display: none !important; }
     .toggle-insert { display: none; margin-bottom: 15px; background: #eee; padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; }
     @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; height: auto; } .insert-panel { display: none; height: 400px; } .insert-panel.show { display: block; } .toggle-insert { display: block; } }
 
-/* === DEFINITIONS SECTION STYLES === */
     #view-definitions .def-section { margin-bottom: 50px; }
-    
-    #view-definitions .topic-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.8rem;
-        color: #1a1a1a;
-        margin-bottom: 25px;
-        border-bottom: 2px solid var(--lime-primary);
-        padding-bottom: 8px;
-        display: inline-block;
-    }
-    
-    #view-definitions .def-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-        gap: 20px; 
-    }
-    
-    #view-definitions .def-card { 
-        background: white; 
-        padding: 25px; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        border: 1px solid rgba(0,0,0,0.05);
-        transition: transform 0.2s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    #view-definitions .def-card:hover { 
-        transform: translateY(-3px); 
-        border-color: var(--lime-primary);
-        box-shadow: 0 10px 25px rgba(50, 205, 50, 0.15);
-    }
-    
-    /* Blue accent line for definitions to distinguish from formulae */
-    #view-definitions .def-card::before {
-        content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-        background: #3b82f6; /* Nice professional blue */
-    }
-
-    #view-definitions .d-term { 
-        font-family: 'Playfair Display', serif;
-        font-size: 1.1rem; 
-        font-weight: 700; 
-        color: #1e293b; 
-        margin-bottom: 10px;
-    }
-    
-    #view-definitions .d-desc { 
-        font-family: 'Inter', sans-serif;
-        font-size: 0.95rem; 
-        font-weight: 400; 
-        color: #475569; 
-        line-height: 1.6;
-    }
-
-    /* === MODEL ANSWER & WORD COUNT STYLES === */
-    .model-answer-box {
-        white-space: pre-wrap;  
-        line-height: 1.7;       
-        font-family: 'Inter', sans-serif;
-        background: #1e1e1e;    
-        color: #e0e0e0;
-        padding: 25px;
-        border-radius: 12px;
-        margin-top: 20px;
-        font-size: 0.95rem;
-        border-left: 4px solid var(--lime-primary);
-    }
-
-    .word-count-display {
-        font-size: 0.85rem;
-        color: #666;
-        font-weight: 600;
-        background: #f5f5f5;
-        padding: 4px 10px;
-        border-radius: 20px;
-    }
-    /* === UPGRADED FEEDBACK & MODEL ANSWER STYLES === */
-
-/* 1. The Container for Feedback */
-.feedback-box {
-    margin-top: 25px;
-    background: #f8fff8; /* Light green tint for success feel */
-    padding: 25px;
-    border-radius: 16px;
-    border: 1px solid var(--lime-primary);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-/* 2. Feedback Headers (Score, Strengths, etc.) */
-.feedback-box h3 {
-    margin-top: 0;
-    color: var(--lime-dark);
-    font-size: 1.4rem;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-}
-
-/* 3. CRITICAL: This makes the paragraphs show up! */
-.feedback-box p {
-    line-height: 1.8;       /* Better readability */
-    color: #444;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-    white-space: pre-wrap;  /* <--- THIS IS THE MAGIC LINE */
-}
-
-/* 4. Model Answer Box (Dark Mode Style) */
-.model-answer-box {
-    white-space: pre-wrap;  /* Preserves formatting in model answer too */
-    line-height: 1.7;       
-    font-family: 'Inter', sans-serif;
-    background: #1e1e1e;    
-    color: #e0e0e0;
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 20px;
-    font-size: 0.95rem;
-    border-left: 4px solid var(--lime-primary);
-}
-
-/* 5. Strong Tags (e.g. "Strengths:") */
-.feedback-box strong {
-    color: #1a1a1a;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 5px;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+    #view-definitions .topic-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #1a1a1a; margin-bottom: 25px; border-bottom: 2px solid var(--lime-primary); padding-bottom: 8px; display: inline-block; }
+    #view-definitions .def-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    #view-definitions .def-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease; position: relative; overflow: hidden; }
+    #view-definitions .def-card:hover { transform: translateY(-3px); border-color: var(--lime-primary); box-shadow: 0 10px 25px rgba(50, 205, 50, 0.15); }
+    #view-definitions .def-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #3b82f6; }
+    #view-definitions .d-term { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
+    #view-definitions .d-desc { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; color: #475569; line-height: 1.6; }
+    .word-count-display { font-size: 0.85rem; color: #666; font-weight: 600; background: #f5f5f5; padding: 4px 10px; border-radius: 20px; }
 
 </style>
 </head>
@@ -308,14 +241,29 @@
     <button class="nav-btn active" onclick="setView('papers')">Papers</button>
     <button class="nav-btn" onclick="setView('formulae')">Formulae</button>
     <button class="nav-btn" onclick="setView('definitions')">Definitions</button>
-    
     <button class="nav-btn" onclick="setView('scorecard')">Scorecard</button>
-    <button class="nav-btn" onclick="doLogout()">Logout</button>
+    <button class="nav-btn" onclick="setView('chat')">AI Tutor</button> <button class="nav-btn" onclick="doLogout()">Logout</button>
 </div>
         </div>
 
+        <div id="view-chat" class="hidden">
+            <div class="chat-header">
+                <div style="font-size:1.5rem;">🤖</div>
+                <div>
+                    <h3 style="margin:0; color:var(--text-dark);">Study Assistant</h3>
+                    <p style="margin:0; color:#888; font-size:0.9rem;">Ask me anything about Business or Economics</p>
+                </div>
+            </div>
+            <div class="chat-window" id="chat-messages">
+                <div class="chat-msg ai-msg">Hello! I'm your AI Tutor. I can help you understand concepts, formulas, or marking schemes for Business (9609). What are you studying today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type your question here (e.g. 'Explain Price Elasticity')..." onkeypress="handleChatEnter(event)">
+                <button class="send-chat-btn" onclick="sendChatMessage()">➤</button>
+            </div>
+        </div>
+
         <div id="view-papers">
-            
             <div class="series-header"><div class="year-big">2024</div><div class="series-name">Feb / March Series</div></div>
             <div class="papers-grid">
                 <div class="paper-card" onclick="openPaper('2024_fm_32')"><span class="paper-tag">9609/32</span><h3>Clean Delivery (CD)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
@@ -414,7 +362,6 @@
         </div>
         
 <div id="view-definitions" class="hidden">
-    
     <div class="def-section">
         <h3 class="topic-title">Strategy & Economics</h3>
         <div class="def-grid">
@@ -586,8 +533,8 @@
     function doLogout() { localStorage.removeItem('user'); location.reload(); }
 
    function setView(viewName) {
-    // Added 'definitions' to this list so it hides properly when switching tabs
-    ['papers', 'scorecard', 'workspace', 'formulae', 'definitions'].forEach(v => {
+    // Added 'definitions' and 'chat' to this list
+    ['papers', 'scorecard', 'workspace', 'formulae', 'definitions', 'chat'].forEach(v => {
         const el = document.getElementById(`view-${v}`);
         if(el) el.classList.add('hidden');
     });
@@ -597,7 +544,7 @@
     // Update active button state
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
-        if(btn.innerText.toLowerCase() === viewName) btn.classList.add('active');
+        if(btn.innerText.toLowerCase().includes(viewName) || (viewName === 'chat' && btn.innerText.includes('AI'))) btn.classList.add('active');
     });
 
     if(viewName === 'scorecard') renderScorecard();
@@ -687,50 +634,15 @@
     const qData = paperData[pid].questions.find(q => q.n === qn);
     
     // 2. GENERATE STRICT RUBRIC BASED ON MARKS
-    let rubricInstructions = "";
-    
-    if (qData.m === 12) {
-        // 12 Mark Evaluation Question Split: 2, 2, 2, 6
-        rubricInstructions = `
-        [IMPORTANT EXAMINER INSTRUCTIONS]
-        ACT AS A STRICT CAMBRIDGE EXAMINER.
-        You MUST follow this exact marking grid for 12 marks:
-        - AO1 (Knowledge): Max 2 marks.
-        - AO2 (Application): Max 2 marks.
-        - AO3 (Analysis): Max 2 marks (DO NOT AWARD MORE THAN 2).
-        - AO4 (Evaluation): Max 6 marks.
-        
-        CRITICAL RULES:
-        1. If the Analysis (AO3) is strong, it is still CAPPED at 2 marks. Do not give 3 or 4 for Analysis.
-        2. To award high AO4, the student must show judgement, weighting of arguments, or short/long term perspective.
-        3. Be harsh. Do not be generous.
-        `;
-    } else if (qData.m === 8) {
-        // 8 Mark Analysis Question Split: 2, 2, 4, 0
-        rubricInstructions = `
-        [IMPORTANT EXAMINER INSTRUCTIONS]
-        ACT AS A STRICT CAMBRIDGE EXAMINER.
-        You MUST follow this exact marking grid for 8 marks:
-        - AO1 (Knowledge): Max 2 marks.
-        - AO2 (Application): Max 2 marks.
-        - AO3 (Analysis): Max 4 marks.
-        - AO4 (Evaluation): 0 marks (This is an Analysis question).
-        `;
-    } else if (qData.m === 20) {
-        // 20 Mark Essay (Just in case): 2, 3, 8, 7
-        rubricInstructions = `[INSTRUCTION: Mark strictly. AO1=2, AO2=3, AO3=8, AO4=7.]`;
-    }
-
-    // 3. COMBINE QUESTION + INSTRUCTIONS
-    const finalPrompt = `${qData.t}\n\n${rubricInstructions}`;
+    // ... (Your strict marking logic is handled in Python now, so we just send marks)
 
     try {
         const res = await fetch('https://ultimate-exam-guide.onrender.com/mark', {
             method: 'POST', 
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
-                question: finalPrompt,  // We send the instructions attached to the question
-                case_study: "Refer to attached PDF. Use the case context strictly for AO2.", 
+                question: qData.t,
+                case_study: `Refer to ${paperData[pid].title} PDF context.`, // Or send full text if you extracted it
                 answer: ans, 
                 marks: qData.m 
             })
@@ -817,6 +729,47 @@
     }
     function resetAll() {
         if(confirm("WIPE ALL DATA?")) { localStorage.clear(); location.reload(); }
+    }
+
+    /* === NEW CHAT FUNCTIONS === */
+    function handleChatEnter(e) { if(e.key === 'Enter') sendChatMessage(); }
+
+    async function sendChatMessage() {
+        const input = document.getElementById('chat-input');
+        const msg = input.value.trim();
+        if(!msg) return;
+
+        // 1. Add User Message
+        const chatWin = document.getElementById('chat-messages');
+        chatWin.innerHTML += `<div class="chat-msg user-msg">${msg}</div>`;
+        input.value = '';
+        chatWin.scrollTop = chatWin.scrollHeight;
+
+        // 2. Show Typing Indicator (Optional but nice)
+        const loadingId = 'loading-' + Date.now();
+        chatWin.innerHTML += `<div id="${loadingId}" class="chat-msg ai-msg" style="color:#888;">Typing...</div>`;
+        chatWin.scrollTop = chatWin.scrollHeight;
+
+        try {
+            const res = await fetch('https://ultimate-exam-guide.onrender.com/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ message: msg })
+            });
+            const json = await res.json();
+            
+            // 3. Replace Typing with AI Answer
+            document.getElementById(loadingId).remove();
+            
+            // Format bold text from Markdown (**text**) to HTML (<b>text</b>)
+            const formattedReply = json.reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            
+            chatWin.innerHTML += `<div class="chat-msg ai-msg">${formattedReply}</div>`;
+            chatWin.scrollTop = chatWin.scrollHeight;
+
+        } catch(e) {
+            document.getElementById(loadingId).innerText = "Error: Could not connect to AI Tutor.";
+        }
     }
 
     if(getUser()) { 
