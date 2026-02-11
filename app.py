@@ -20,7 +20,21 @@ model = genai.GenerativeModel('models/gemini-2.5-flash')
 BIN_ID = '698c12cdae596e708f21a63d'
 MASTER_KEY = '$2a$10$atDVmJayGd5Wx2u3bcT67.gjsOMo8KJQWtFl5Yp5hSVbPvtdtj/EW'
 
-BIN_URL = f'https://api.jsonbin.io/v3/b/{BIN_ID}'
+BIN_URL = f'https://api.jsonbin.io/v3/b/{BIN_ID}'@app.route('/leaderboard', methods=['GET'])
+def get_leaderboard():
+    try:
+        # Fetch scores from the cloud
+        req = requests.get(BIN_URL, headers=HEADERS)
+        scores = req.json().get('record', {})
+        
+        # 🛡️ BULLETPROOF FIX: Filter out any garbage data (like "init": true)
+        valid_scores = {k: v for k, v in scores.items() if isinstance(v, dict) and 'score' in v}
+        
+        # Sort users by score (highest first)
+        sorted_scores = sorted(valid_scores.items(), key=lambda x: x[1]['score'], reverse=True)
+        return jsonify(sorted_scores), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 HEADERS = {
     'X-Master-Key': MASTER_KEY,
     'Content-Type': 'application/json'
@@ -33,8 +47,11 @@ def get_leaderboard():
         req = requests.get(BIN_URL, headers=HEADERS)
         scores = req.json().get('record', {})
         
+        # 🛡️ BULLETPROOF FIX: Filter out any garbage data (like "init": true)
+        valid_scores = {k: v for k, v in scores.items() if isinstance(v, dict) and 'score' in v}
+        
         # Sort users by score (highest first)
-        sorted_scores = sorted(scores.items(), key=lambda x: x[1]['score'], reverse=True)
+        sorted_scores = sorted(valid_scores.items(), key=lambda x: x[1]['score'], reverse=True)
         return jsonify(sorted_scores), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
