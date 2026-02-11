@@ -1281,11 +1281,9 @@ if(getUser()) {
 </script>
 
 <script type="module">
-  // 1. Import Firebase from the internet (CDN)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-  // 2. Your exact Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDQdGnwbZq_V7Hm6V8IAVz7bnTt25H622s",
     authDomain: "habibi-studies-chat.firebaseapp.com",
@@ -1296,55 +1294,56 @@ if(getUser()) {
     appId: "1:877923996625:web:9e493c16c618c46a11c6f0"
   };
 
-  // 3. Start Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  const chatRef = ref(db, 'class_chat'); // This creates a "folder" in your database called class_chat
+  const chatRef = ref(db, 'class_chat');
 
-  // 4. SEND MESSAGE FUNCTION (Attached to window so HTML buttons can click it)
+  // 🛡️ SAFE USERNAME FINDER
+  function getChatUser() {
+      // It safely checks local storage to see what name you logged in with
+      return localStorage.getItem('username') || localStorage.getItem('user') || localStorage.getItem('currentUser') || "Student";
+  }
+
+  // SEND MESSAGE
   window.sendChatMessage = function() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
-      const user = getUser(); // We use your existing login system!
+      const user = getChatUser(); 
 
-      if (!user) {
-          alert("Please sign in first to send a message.");
-          return;
-      }
-      
       if (text !== '') {
-          // Push the message up to Firebase
+          // Send to Firebase, and catch any hidden errors!
           push(chatRef, {
               name: user,
               text: text,
               timestamp: serverTimestamp()
+          }).catch(error => {
+              // If Firebase blocks the message, this popup will tell us why
+              alert("Firebase Error: " + error.message); 
           });
-          input.value = ''; // Clear the text box
+          
+          input.value = ''; 
       }
   };
 
-  // 5. ALLOW PRESSING "ENTER" TO SEND
+  // PRESS ENTER TO SEND
   window.handleChatEnter = function(event) {
       if (event.key === 'Enter') {
           window.sendChatMessage();
       }
   };
 
-  // 6. RECEIVE MESSAGES IN REAL-TIME
+  // RECEIVE MESSAGES
   const chatMessages = document.getElementById('chat-messages');
   
   onChildAdded(chatRef, (snapshot) => {
       const data = snapshot.val();
       
-      // Remove the "Welcome" placeholder if it's there
       const welcome = chatMessages.querySelector('div[style*="text-align: center"]');
       if (welcome) welcome.remove();
 
-      // Check if I sent it, or someone else sent it
-      const isMe = data.name === getUser();
+      const isMe = data.name === getChatUser();
       const cleanName = data.name ? data.name.replace('.', ' ') : 'Unknown';
       
-      // Build the message bubble
       const msgDiv = document.createElement('div');
       msgDiv.className = `msg-box ${isMe ? 'me' : 'other'}`;
       msgDiv.innerHTML = `
@@ -1352,7 +1351,6 @@ if(getUser()) {
           <div class="msg-bubble">${data.text}</div>
       `;
       
-      // Add to screen and scroll down
       chatMessages.appendChild(msgDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
   });
