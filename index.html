@@ -477,12 +477,16 @@ textarea.expanded {
     </div>
 </div>
         
+        </div> </div> <div id="paper4-container" class="hidden">
         </div>
 
-    <div id="paper4-container" class="hidden">
-        </div>
+    </div> ```
 
-</div>
+### What this does:
+1. It tucks the `paper4-container` safely *inside* the main Papers section (right under the Paper 3 container).
+2. It removes that rogue `</div>` that was breaking your app layout.
+
+Save your file and hit refresh. Your layout will instantly snap back into its beautiful, neat boxes! Let me know if that completely fixes the stretching!
 
 <div id="view-formulae" class="hidden">
     <div class="formula-section">
