@@ -65,5 +65,3 @@ pip install -r requirements.txt
 **Deployment**: Render.com (backend), Static files served by Flask
 
 ## 🔐 Note
-
-This project contains hardcoded API keys and credentials in the frontend code. **Do not use in production without proper environment variable management.**
