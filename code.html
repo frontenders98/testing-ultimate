@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Habibi Studies - Exam Mode</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#22c55e", // Green from the reference
+                        "background-light": "#f0fdf4", // Very light green tint
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }.pdf-container { transition: width 0.3s ease-in-out; }
+        .question-sidebar { transition: width 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen flex flex-col overflow-hidden">
+<header class="h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-green-100 dark:border-slate-800 px-6 flex items-center justify-between z-50">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-icons-outlined">school</span>
+</div>
+<div>
+<h1 class="font-bold text-lg text-primary leading-tight">Habibi Studies</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Welcome, Newton</p>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Papers</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Formulae</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Definitions</a>
+<a class="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-icons-outlined text-yellow-500 text-lg">emoji_events</span>
+                Leaderboard
+            </a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+<span class="material-icons-outlined">chat_bubble_outline</span>
+</button>
+<button class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                Logout
+            </button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<aside class="w-16 bg-white dark:bg-slate-900 border-r border-green-50 dark:border-slate-800 flex flex-col items-center py-6 gap-6">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">home</span>
+</button>
+<button class="p-2 text-primary bg-green-50 dark:bg-green-900/20 rounded-xl">
+<span class="material-icons-outlined">description</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">analytics</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">settings</span>
+</button>
+<div class="mt-auto flex flex-col gap-6">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">download</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">add_circle_outline</span>
+</button>
+</div>
+</aside>
+<section class="pdf-container flex-1 relative bg-slate-200 dark:bg-slate-800 p-6 overflow-y-auto custom-scrollbar" id="pdf-container">
+<div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 shadow-2xl rounded-sm min-h-[1200px] p-12 relative">
+<div class="absolute top-4 left-1/2 -translate-x-1/2 bg-slate-800/90 text-white px-4 py-2 rounded-full flex items-center gap-4 text-sm backdrop-blur">
+<button class="hover:text-primary"><span class="material-icons-outlined text-lg">menu</span></button>
+<div class="h-4 w-[1px] bg-slate-600"></div>
+<div class="flex items-center gap-2">
+<input class="w-8 bg-slate-700 border-none rounded text-center text-xs py-1" type="text" value="2"/>
+<span>of 4</span>
+</div>
+<div class="h-4 w-[1px] bg-slate-600"></div>
+<button class="hover:text-primary"><span class="material-icons-outlined text-lg">remove</span></button>
+<span class="font-medium">100%</span>
+<button class="hover:text-primary"><span class="material-icons-outlined text-lg">add</span></button>
+<div class="h-4 w-[1px] bg-slate-600"></div>
+<button class="hover:text-primary"><span class="material-icons-outlined text-lg">edit</span></button>
+<button class="hover:text-primary"><span class="material-icons-outlined text-lg">print</span></button>
+</div>
+<div class="space-y-6 pt-10">
+<div class="flex justify-between items-center border-b pb-4 border-slate-100 dark:border-slate-800">
+<h2 class="text-2xl font-bold">Business Studies Case Study</h2>
+<span class="text-slate-400 text-sm">Paper 2 / Oct 2024</span>
+</div>
+<div class="prose dark:prose-invert max-w-none">
+<h3 class="text-xl font-bold">A cleaner brand</h3>
+<p>Gianni thought there was an opportunity to disrupt the household cleaning product market in country K with a new approach to distribution. CD manufactures and sells detergent which is used to wash clothes. Sales are made to households through a subscription service using postal deliveries to distribute the product. CD claims three main benefits for customers:</p>
+<ul class="list-disc pl-5 space-y-2">
+<li>cheaper per clothes wash than leading retail brands</li>
+<li>environmentally responsible as no plastics are used in packaging</li>
+<li>flexible and convenient delivery of the detergent.</li>
+</ul>
+<p>Customers control the frequency of their home deliveries online. Payments are taken directly from customer bank accounts for each delivery.</p>
+<h3 class="text-xl font-bold mt-8">Marketing success?</h3>
+<p>The household cleaning product market is competitive. Multinationals target the mass market whilst some smaller businesses focus on the environmental market segment. CD made effective use of social media when the company launched its washing detergent. A substantial marketing budget supported rapid sales growth. CD's share of country K's clothing detergent market is currently 5%. CD has an objective to double that within the next two years. CD has benefited from positive publicity in the media and Gianni and Anna have won entrepreneurial awards in country K.</p>
+<p>However, some pressure groups have questioned whether CD's products are as sustainable as other environmentally friendly brands. Product tests have also found that CD's products provide less effective cleaning than the market-leading multinational brands.</p>
+<h3 class="text-xl font-bold mt-8">Developing new products</h3>
+<p>Since 2018 CD has developed a small range of additional cleaning products. CD aims to ensure that each new product can be delivered easily by post. To ensure products are sustainable CD only uses materials that are not harmful to the environment.</p>
+</div>
+<div class="absolute right-4 top-40 space-y-16 text-xs text-slate-300 font-mono select-none">
+<div>5</div>
+<div>10</div>
+<div>15</div>
+<div>20</div>
+<div>25</div>
+<div>30</div>
+<div>35</div>
+</div>
+</div>
+</div>
+</section>
+<section class="question-sidebar w-[400px] bg-white dark:bg-slate-900 border-l border-green-50 dark:border-slate-800 flex flex-col z-20 shadow-xl" id="question-sidebar">
+<div class="p-6 border-b border-green-50 dark:border-slate-800 flex items-center justify-between bg-green-50/30 dark:bg-slate-800/30">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-icons-outlined text-primary">assignment</span>
+                    Questions
+                </h3>
+<div class="text-xs font-semibold text-primary bg-white dark:bg-slate-900 px-3 py-1 rounded-full border border-green-100 dark:border-slate-700 shadow-sm">
+                    45:00 Left
+                </div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+<button class="flex items-center gap-2 text-sm text-slate-500 hover:text-primary transition-colors mb-4 group">
+<span class="material-icons-outlined text-base group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    Back to Papers
+                </button>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-lg">Q3(a)</h4>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">2 Marks</span>
+</div>
+<p class="text-sm font-medium leading-relaxed">Refer to Table 1.1. Calculate the Price Earnings (P/E) ratio for 2024.</p>
+<div class="relative group">
+<textarea class="w-full h-32 p-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl focus:ring-primary focus:border-primary text-sm resize-none transition-all" id="q1-input" placeholder="Type your answer here..."></textarea>
+<button class="absolute bottom-3 right-3 flex items-center gap-1 text-[10px] font-bold bg-white dark:bg-slate-700 shadow-sm border border-slate-200 dark:border-slate-600 px-2 py-1 rounded hover:bg-slate-50 transition-colors uppercase" onclick="toggleExpand('q1-input')">
+<span class="material-icons-outlined text-xs">open_in_full</span>
+                            Expand
+                        </button>
+</div>
+</div>
+<div class="h-px bg-slate-100 dark:bg-slate-800"></div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-lg">Q3(b)</h4>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">8 Marks</span>
+</div>
+<p class="text-sm font-medium leading-relaxed">Evaluate the likely impact on CD's brand image of the product test results mentioned in the text.</p>
+<div class="relative">
+<textarea class="w-full h-48 p-4 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-xl focus:ring-primary focus:border-primary text-sm resize-none transition-all" id="q2-input" placeholder="Provide a detailed evaluation..."></textarea>
+<div class="absolute bottom-3 left-3 text-[10px] text-red-500 font-bold bg-white/80 dark:bg-slate-700/80 px-2 py-1 rounded">
+                            0 words (150–225)
+                        </div>
+<button class="absolute bottom-3 right-3 flex items-center gap-1 text-[10px] font-bold bg-white dark:bg-slate-700 shadow-sm border border-slate-200 dark:border-slate-600 px-2 py-1 rounded hover:bg-slate-50 transition-colors uppercase" onclick="toggleExpand('q2-input')">
+<span class="material-icons-outlined text-xs">open_in_full</span>
+                            Expand
+                        </button>
+</div>
+</div>
+</div>
+<div class="p-6 bg-white dark:bg-slate-900 border-t border-green-50 dark:border-slate-800 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<button class="w-full py-4 bg-primary hover:bg-green-600 text-white font-bold rounded-xl shadow-lg shadow-green-200 dark:shadow-none transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-icons-outlined">check_circle</span>
+                    Submit for Strict Marking
+                </button>
+</div>
+</section>
+</main>
+<script>
+        let isExpanded = false;
+        function toggleExpand(inputId) {
+            const sidebar = document.getElementById('question-sidebar');
+            const pdfContainer = document.getElementById('pdf-container');
+            const input = document.getElementById(inputId);
+            const btn = event.currentTarget;
+            if (!isExpanded) {
+                // Expand sidebar to 50%
+                sidebar.style.width = '55%';
+                input.style.height = '400px';
+                btn.innerHTML = '<span class="material-icons-outlined text-xs">close_fullscreen</span> Minimize';
+                isExpanded = true;
+            } else {
+                // Return to 400px
+                sidebar.style.width = '400px';
+                input.style.height = inputId === 'q1-input' ? '128px' : '192px'; // Original heights
+                btn.innerHTML = '<span class="material-icons-outlined text-xs">open_in_full</span> Expand';
+                isExpanded = false;
+            }
+        }
+    </script>
+
+</body></html>

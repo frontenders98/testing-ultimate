@@ -3,21 +3,21 @@
 // ==========================================
 
 const paperDatabase = {
-    "2025_on_31": { 
-        pdf: "9708_w25_qp_31.pdf", 
-        answers: ['A', 'A', 'C', 'A', 'D', 'A', 'D', 'D', 'B', 'B', 'C', 'A', 'D', 'B', 'A', 'D', 'D', 'B', 'C', 'C', 'C', 'A', 'D', 'B', 'A', 'B', 'A', 'D', 'A', 'C'] 
+    "2025_on_31": {
+        pdf: "assets/pdfs/economics/paper3/9708_w25_qp_31.pdf",
+        answers: ['A', 'A', 'C', 'A', 'D', 'A', 'D', 'D', 'B', 'B', 'C', 'A', 'D', 'B', 'A', 'D', 'D', 'B', 'C', 'C', 'C', 'A', 'D', 'B', 'A', 'B', 'A', 'D', 'A', 'C']
     },
-    "2025_on_32": { 
-        pdf: "9708_w25_qp_32.pdf", 
-        answers: ['A', 'D', 'C', 'C', 'C', 'A', 'D', 'B', 'D', 'B', 'B', 'D', 'B', 'B', 'B', 'A', 'D', 'D', 'B', 'C', 'C', 'B', 'A', 'D', 'B', 'A', 'C', 'B', 'A', 'D'] 
+    "2025_on_32": {
+        pdf: "assets/pdfs/economics/paper3/9708_w25_qp_32.pdf",
+        answers: ['A', 'D', 'C', 'C', 'C', 'A', 'D', 'B', 'D', 'B', 'B', 'D', 'B', 'B', 'B', 'A', 'D', 'D', 'B', 'C', 'C', 'B', 'A', 'D', 'B', 'A', 'C', 'B', 'A', 'D']
     },
-    "2025_on_33": { 
-        pdf: "9708_w25_qp_33.pdf", 
-        answers: ['C', 'A', 'B', 'D', 'D', 'C', 'C', 'B', 'D', 'D', 'A', 'D', 'B', 'A', 'B', 'D', 'A', 'A', 'D', 'C', 'B', 'C', 'A', 'D', 'C', 'B', 'A', 'B', 'D', 'A'] 
+    "2025_on_33": {
+        pdf: "assets/pdfs/economics/paper3/9708_w25_qp_33.pdf",
+        answers: ['C', 'A', 'B', 'D', 'D', 'C', 'C', 'B', 'D', 'D', 'A', 'D', 'B', 'A', 'B', 'D', 'A', 'A', 'D', 'C', 'B', 'C', 'A', 'D', 'C', 'B', 'A', 'B', 'D', 'A']
     },
-    "2025_on_34": { 
-        pdf: "9708_w25_qp_34.pdf", 
-        answers: ['D', 'C', 'C', 'B', 'C', 'D', 'D', 'A', 'B', 'D', 'D', 'A', 'C', 'D', 'A', 'B', 'D', 'D', 'B', 'B', 'C', 'C', 'A', 'D', 'B', 'A', 'C', 'B', 'B', 'C'] 
+    "2025_on_34": {
+        pdf: "assets/pdfs/economics/paper3/9708_w25_qp_34.pdf",
+        answers: ['D', 'C', 'C', 'B', 'C', 'D', 'D', 'A', 'B', 'D', 'D', 'A', 'C', 'D', 'A', 'B', 'D', 'D', 'B', 'B', 'C', 'C', 'A', 'D', 'B', 'A', 'C', 'B', 'B', 'C']
     }
 };
 
@@ -69,10 +69,10 @@ function startMCQTest(paperID) {
     currentPaperID = paperID;
     testSubmitted = false;
     const paperInfo = paperDatabase[paperID];
-    
-    if(!paperInfo) { 
-        alert("Paper data not found!"); 
-        return; 
+
+    if (!paperInfo) {
+        alert("Paper data not found!");
+        return;
     }
 
     // Lock the background website from scrolling
@@ -102,7 +102,7 @@ function startMCQTest(paperID) {
                     <h3 style="margin-top:0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Answer Sheet</h3>
                     <div id="bubble-grid" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
     `;
-    
+
     // Generate the 30 Bubbles
     paperInfo.answers.forEach((correctLetter, index) => {
         let qNum = index + 1;
@@ -111,7 +111,7 @@ function startMCQTest(paperID) {
                 <div style="width: 40px; font-weight: bold; font-size: 1.1rem; color: #555;">Q${qNum}</div>
                 <div style="display:flex; gap: 10px; flex-grow: 1; justify-content: space-around;">
         `;
-        
+
         ['A', 'B', 'C', 'D'].forEach(letter => {
             html += `
                 <label id="label-q${index}-${letter}" style="display:flex; justify-content:center; align-items:center; width: 40px; height: 40px; background: white; border: 2px solid #ccc; border-radius: 50%; cursor:pointer; transition: 0.2s;">
@@ -133,15 +133,15 @@ function startMCQTest(paperID) {
             </div>
         </div>
     `;
-    
+
     document.getElementById('container-econ-p3').innerHTML = html;
     startTimer();
 }
 
 // Visual effect for clicking a bubble
-window.updateBubble = function(input, qIndex, letter) {
-    if(testSubmitted) return;
-    
+window.updateBubble = function (input, qIndex, letter) {
+    if (testSubmitted) return;
+
     // Reset all bubbles for this question
     ['A', 'B', 'C', 'D'].forEach(l => {
         let label = document.getElementById(`label-q${qIndex}-${l}`);
@@ -158,20 +158,20 @@ window.updateBubble = function(input, qIndex, letter) {
 };
 
 function startTimer() {
-    timeRemaining = 75 * 60; 
+    timeRemaining = 75 * 60;
     clearInterval(timerInterval);
-    
+
     timerInterval = setInterval(() => {
-        if(testSubmitted) return; 
+        if (testSubmitted) return;
         timeRemaining--;
         let h = Math.floor(timeRemaining / 3600);
         let m = Math.floor((timeRemaining % 3600) / 60);
         let s = timeRemaining % 60;
-        
+
         let displayH = String(h).padStart(2, '0');
         let displayM = String(m).padStart(2, '0');
         let displayS = String(s).padStart(2, '0');
-        
+
         document.getElementById('timer-display').innerText = displayH + ":" + displayM + ":" + displayS;
 
         if (timeRemaining <= 0) {
@@ -183,20 +183,20 @@ function startTimer() {
 }
 
 function confirmSubmission() {
-    if(testSubmitted) return;
-    if(confirm("Are you ready to submit your answers for grading?")) {
+    if (testSubmitted) return;
+    if (confirm("Are you ready to submit your answers for grading?")) {
         gradeMCQ();
     }
 }
 
 function gradeMCQ() {
-    if(testSubmitted) return;
+    if (testSubmitted) return;
     testSubmitted = true;
     clearInterval(timerInterval);
-    
+
     const answers = paperDatabase[currentPaperID].answers;
     let score = 0;
-    
+
     answers.forEach((correctLetter, index) => {
         const selectedInput = document.querySelector(`input[name="q${index}"]:checked`);
         const userChoice = selectedInput ? selectedInput.value : null;
@@ -219,7 +219,7 @@ function gradeMCQ() {
             correctLabel.style.backgroundColor = "#22c55e";
             correctLabel.style.borderColor = "#22c55e";
             correctLabel.style.color = "white";
-            
+
             if (userChoice) {
                 let userLabel = document.getElementById(`label-q${index}-${userChoice}`);
                 userLabel.style.backgroundColor = "#ef4444"; // Red
@@ -231,7 +231,7 @@ function gradeMCQ() {
     });
 
     const percent = Math.round((score / answers.length) * 100);
-    
+
     // Show Results
     const resultBox = document.getElementById('mcq-result-box');
     resultBox.style.display = "block";
@@ -243,7 +243,7 @@ function gradeMCQ() {
 
     document.getElementById('submit-btn').style.display = "none";
     document.getElementById('timer-display').innerText = "TEST COMPLETE";
-    
+
     // Smoothly scroll the answer sheet back to the top to see the score
     document.getElementById('answer-sheet-container').scrollTo({ top: 0, behavior: 'smooth' });
 }

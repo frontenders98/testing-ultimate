@@ -4,27 +4,36 @@ import google.generativeai as genai
 import os
 import requests
 
-app = Flask(__name__)
-# Allow CORS for your specific domain to be safe, or * for testing
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Configure Flask to serve frontend files
+app = Flask(__name__, static_folder='../frontend', static_url_path='')
+CORS(app)
 
-# ==========================================
-# ⚠ IMPORTANT: PASTE YOUR API KEY BELOW
-# ==========================================
-genai.configure(api_key="AIzaSyAu3sXQ_bEOxC_zNSeN6vwzkOZqEJtmHtg") 
+# Gemini AI Configuration
+genai.configure(api_key="AIzaSyAu3sXQ_bEOxC_zNSeN6vwzkOZqEJtmHtg")
 model = genai.GenerativeModel('models/gemini-2.5-flash')
 
-# ==========================================
-# ☁️ CLOUD DATABASE SETTINGS (JSONBIN.IO)
-# ==========================================
-BIN_ID = '698c12cdae596e708f21a63d'
-MASTER_KEY = '$2a$10$3OsrhYa0hGsfBLm7ZcSeLOnnr6rTgZ09aD/l2vptk9w1r7ks/NDlq'
-
-BIN_URL = f'https://api.jsonbin.io/v3/b/{BIN_ID}'
+# JSONBin Configuration
+BIN_ID = "67877c23e41b4d34e47ba6bd"
+MASTER_KEY = "$2a$10$YZZgP8MShF00dv/oZDbCy.QM/p03uyO2JkpnjC4ck04iT0YfHvFke"
+BIN_URL = f"https://api.jsonbin.io/v3/b/{BIN_ID}"
 HEADERS = {
-    'X-Master-Key': MASTER_KEY,
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
+    "X-Master-Key": MASTER_KEY
 }
+
+# =============================================
+# STATIC FILE ROUTES
+# =============================================
+
+@app.route('/')
+def serve_index():
+    """Serve the main index.html"""
+    return send_from_directory('../frontend', 'index.html')
+
+@app.route('/<path:path>')
+def serve_static(path):
+    """Serve all static files (HTML, JS, CSS, PDFs, images)"""
+    return send_from_directory('../frontend', path)
 
 @app.route('/leaderboard', methods=['GET'])
 def get_leaderboard():
@@ -162,4 +171,5 @@ def mark():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
