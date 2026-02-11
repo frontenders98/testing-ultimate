@@ -924,12 +924,15 @@ textarea.expanded {
 function toggleChat() {
     const panel = document.getElementById('chat-panel');
     const overlay = document.getElementById('chat-overlay');
-    const badge = document.getElementById('unread-badge'); // Grabs the red dot
+    const badge = document.getElementById('unread-badge'); 
     
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) {
         overlay.classList.remove('hidden');
-        if (badge) badge.classList.add('hidden'); // Hides the red dot when chat opens!
+        if (badge) badge.classList.add('hidden'); 
+        
+        // 🧠 NEW: Remember the exact millisecond you opened the chat!
+        localStorage.setItem('habibi_chat_last_read', Date.now());
     } else {
         overlay.classList.add('hidden');
     }
@@ -1453,14 +1456,20 @@ if(getUser()) {
       
       if (isNew) {
           chatMessages.appendChild(msgDiv);
-          chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+          chatMessages.scrollTop = chatMessages.scrollHeight; 
           
-          // NEW UNREAD DOT LOGIC:
           const panel = document.getElementById('chat-panel');
           const badge = document.getElementById('unread-badge');
-          // If the chat is closed AND I didn't send the message, show the red dot!
+          
+          // Grab the time you last read the chat (default to 0 if never opened)
+          const lastRead = localStorage.getItem('habibi_chat_last_read') || 0;
+          
+          // Only show red dot if: 
+          // 1. Chat is closed, 2. Someone else sent it, AND 3. It was sent AFTER you last checked the chat!
           if (panel && badge && !panel.classList.contains('open') && !isMe) {
-              badge.classList.remove('hidden');
+              if (data.timestamp && data.timestamp > lastRead) {
+                  badge.classList.remove('hidden');
+              }
           }
       }
   }
