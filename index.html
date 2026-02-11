@@ -349,6 +349,51 @@ textarea.expanded {
     display: none;
 }
 
+/* === HAMBURGER MENU & SIDEBAR === */
+.hamburger-btn { 
+    background: transparent; border: none; font-size: 1.8rem; cursor: pointer; 
+    color: #666; margin-left: 15px; vertical-align: middle; transition: 0.3s; 
+}
+.hamburger-btn:hover { color: var(--lime-dark); }
+
+.side-menu-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.4); z-index: 4000; opacity: 0; 
+    pointer-events: none; transition: 0.3s ease; 
+}
+.side-menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+.side-menu { 
+    position: fixed; top: 0; right: -350px; width: 300px; height: 100vh; 
+    background: white; z-index: 4001; box-shadow: -5px 0 25px rgba(0,0,0,0.1); 
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; 
+    display: flex; flex-direction: column; 
+}
+.side-menu.active { right: 0; }
+
+.menu-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.menu-close { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: #888; transition: 0.2s; }
+.menu-close:hover { color: #dc2626; transform: scale(1.1); }
+
+/* Accordion Subjects */
+.subject-group { border-bottom: 1px solid #f5f5f5; }
+.subject-btn { 
+    width: 100%; text-align: left; padding: 18px 20px; background: white; 
+    border: none; font-size: 1.1rem; font-weight: 800; color: #333; 
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center; 
+}
+.subject-btn:hover { background: #fafafa; color: var(--lime-dark); }
+.subject-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #fafafa; }
+.subject-content.expanded { max-height: 250px; }
+
+.paper-link { 
+    display: block; padding: 12px 20px 12px 40px; color: #666; text-decoration: none; 
+    cursor: pointer; font-weight: 600; border-left: 3px solid transparent; transition: 0.2s;
+}
+.paper-link:hover, .paper-link.active { 
+    background: #f0f0f0; color: var(--lime-dark); border-left-color: var(--lime-primary); 
+}
+
 </style>
 </head>
 <body>
@@ -383,13 +428,19 @@ textarea.expanded {
             <span style="font-size: 1.5rem; vertical-align: middle; margin-right: 5px;">💬</span>
             <span id="unread-badge" class="unread-badge hidden"></span>
         </button>
+<button class="nav-btn" onclick="doLogout()">Logout</button>
+        <button class="hamburger-btn" onclick="toggleSideMenu()">☰</button>
+    </div>
+</div>
         <button class="nav-btn" onclick="doLogout()">Logout</button>
     </div>
 </div>
 
 <div id="view-papers">
+    
+    <div id="container-bus-p3" class="subject-container">
 
-    <div class="series-header"><div class="year-big">2024</div><div class="series-name">Feb / March Series</div></div>
+<div class="series-header"><div class="year-big">2024</div><div class="series-name">Feb / March Series</div></div>
     <div class="papers-grid">
         <div class="paper-card" onclick="openPaper('2024_fm_32')"><span class="paper-tag">9609/32</span><h3>Clean Delivery (CD)</h3><p style="color:#888; margin-top:5px;">Paper 3 • PDF Available</p></div>
     </div>
@@ -428,6 +479,14 @@ textarea.expanded {
     </div>
 </div>
 
+    <div id="container-bus-p4" class="subject-container hidden">
+        </div>
+
+    <div id="container-econ-p3" class="subject-container hidden">
+        </div>
+
+</div>
+    
 <div id="view-formulae" class="hidden">
     <div class="formula-section">
         <h3 class="chapter-title">Finance: Profitability & Liquidity Ratios</h3>
@@ -891,6 +950,31 @@ textarea.expanded {
         </div>
 </div>
 
+<div id="side-menu-overlay" class="side-menu-overlay" onclick="toggleSideMenu()"></div>
+<div id="side-menu" class="side-menu">
+    <div class="menu-header">
+        <h3 style="margin:0; color:var(--lime-dark); font-family:'Playfair Display', serif;">Subjects</h3>
+        <button class="menu-close" onclick="toggleSideMenu()">✖</button>
+    </div>
+    
+    <div class="subject-group">
+        <button class="subject-btn" onclick="toggleSubject('sub-business')">Business <span>▼</span></button>
+        <div id="sub-business" class="subject-content expanded">
+            <div id="link-bus-p3" class="paper-link active" onclick="switchPaperView('bus-p3')">Paper 3</div>
+            <div id="link-bus-p4" class="paper-link" onclick="switchPaperView('bus-p4')">Paper 4</div>
+        </div>
+    </div>
+
+    <div class="subject-group">
+        <button class="subject-btn" onclick="toggleSubject('sub-econ')">Economics <span>▼</span></button>
+        <div id="sub-econ" class="subject-content">
+            <div id="link-econ-p3" class="paper-link" onclick="switchPaperView('econ-p3')">Paper 3</div>
+            <div id="link-econ-p4" class="paper-link" onclick="switchPaperView('econ-p4')">Paper 4</div>
+        </div>
+    </div>
+    
+    </div>
+
 <div id="chat-overlay" class="chat-overlay hidden" onclick="toggleChat()"></div>
 <div id="chat-panel" class="chat-panel">
     <div class="chat-header">
@@ -919,6 +1003,35 @@ textarea.expanded {
 </div>
 
 <script>
+
+    // === SIDE MENU & MULTI-SUBJECT LOGIC ===
+function toggleSideMenu() {
+    document.getElementById('side-menu').classList.toggle('active');
+    document.getElementById('side-menu-overlay').classList.toggle('active');
+}
+
+function toggleSubject(subId) {
+    const content = document.getElementById(subId);
+    // Expand or collapse the clicked subject
+    content.classList.toggle('expanded');
+}
+
+function switchPaperView(targetViewId) {
+    // 1. Hide ALL paper containers
+    document.querySelectorAll('.subject-container').forEach(el => el.classList.add('hidden'));
+    
+    // 2. Show the specific one clicked
+    const target = document.getElementById(`container-${targetViewId}`);
+    if(target) target.classList.remove('hidden');
+    
+    // 3. Highlight the active link in the menu
+    document.querySelectorAll('.paper-link').forEach(el => el.classList.remove('active'));
+    document.getElementById(`link-${targetViewId}`).classList.add('active');
+    
+    // 4. Close the side menu and ensure we are on the Papers view
+    toggleSideMenu();
+    setView('papers');
+}
 
 // === CHAT UI LOGIC ===
 function toggleChat() {
@@ -1482,6 +1595,8 @@ if(getUser()) {
       if(el) el.remove();
   });
 </script>
+
+<script src="business_p4.js"></script>
 
 </body>
 </html>
