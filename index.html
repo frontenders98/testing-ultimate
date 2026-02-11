@@ -8,6 +8,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 
+    /* === CHAT MESSAGE BUBBLE STYLES === */
+.msg-box { margin-bottom: 15px; display: flex; flex-direction: column; }
+.msg-box.me { align-items: flex-end; }
+.msg-box.other { align-items: flex-start; }
+
+.msg-name { font-size: 0.75rem; color: #888; margin-bottom: 3px; font-weight: 700; text-transform: capitalize; }
+
+.msg-bubble { 
+    max-width: 80%; 
+    padding: 10px 15px; 
+    border-radius: 18px; 
+    font-size: 0.95rem; 
+    line-height: 1.4; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Green bubbles for ME */
+.msg-box.me .msg-bubble { 
+    background: linear-gradient(135deg, var(--lime-primary) 0%, var(--lime-dark) 100%); 
+    color: white; 
+    border-bottom-right-radius: 4px; 
+}
+
+/* Grey bubbles for OTHERS */
+.msg-box.other .msg-bubble { 
+    background: #f1f5f9; 
+    color: #334155; 
+    border-bottom-left-radius: 4px; 
+    border: 1px solid #e2e8f0;
+}
+
 /* === CHAT PANEL STYLES === */
 .chat-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2999; transition: opacity 0.3s ease; }
 .chat-overlay.hidden { opacity: 0; pointer-events: none; }
@@ -1248,5 +1279,84 @@ if(getUser()) {
     setTimeout(syncScore, 1000);
 }
 </script>
+
+<script type="module">
+  // 1. Import Firebase from the internet (CDN)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+  // 2. Your exact Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQdGnwbZq_V7Hm6V8IAVz7bnTt25H622s",
+    authDomain: "habibi-studies-chat.firebaseapp.com",
+    databaseURL: "https://habibi-studies-chat-default-rtdb.firebaseio.com",
+    projectId: "habibi-studies-chat",
+    storageBucket: "habibi-studies-chat.firebasestorage.app",
+    messagingSenderId: "877923996625",
+    appId: "1:877923996625:web:9e493c16c618c46a11c6f0"
+  };
+
+  // 3. Start Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const chatRef = ref(db, 'class_chat'); // This creates a "folder" in your database called class_chat
+
+  // 4. SEND MESSAGE FUNCTION (Attached to window so HTML buttons can click it)
+  window.sendChatMessage = function() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      const user = getUser(); // We use your existing login system!
+
+      if (!user) {
+          alert("Please sign in first to send a message.");
+          return;
+      }
+      
+      if (text !== '') {
+          // Push the message up to Firebase
+          push(chatRef, {
+              name: user,
+              text: text,
+              timestamp: serverTimestamp()
+          });
+          input.value = ''; // Clear the text box
+      }
+  };
+
+  // 5. ALLOW PRESSING "ENTER" TO SEND
+  window.handleChatEnter = function(event) {
+      if (event.key === 'Enter') {
+          window.sendChatMessage();
+      }
+  };
+
+  // 6. RECEIVE MESSAGES IN REAL-TIME
+  const chatMessages = document.getElementById('chat-messages');
+  
+  onChildAdded(chatRef, (snapshot) => {
+      const data = snapshot.val();
+      
+      // Remove the "Welcome" placeholder if it's there
+      const welcome = chatMessages.querySelector('div[style*="text-align: center"]');
+      if (welcome) welcome.remove();
+
+      // Check if I sent it, or someone else sent it
+      const isMe = data.name === getUser();
+      const cleanName = data.name ? data.name.replace('.', ' ') : 'Unknown';
+      
+      // Build the message bubble
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `msg-box ${isMe ? 'me' : 'other'}`;
+      msgDiv.innerHTML = `
+          <div class="msg-name">${isMe ? 'You' : cleanName}</div>
+          <div class="msg-bubble">${data.text}</div>
+      `;
+      
+      // Add to screen and scroll down
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+</script>
+
 </body>
 </html>
